@@ -5,8 +5,11 @@ const User = require("../schema/user.schema")
 const createUser = async (user) => {
     // Express <---> DB - 무슨 에러가 날지 알 수 없음.
     try {
-        const user = await User.create(user); // mongoDB에 접근. DB 접근하는 작업은 Service에서만.
-    } catch (err) {}
+        const createduser = await User.create(user); // mongoDB에 접근. DB 접근하는 작업은 Service에서만.
+        console.log(createduser);
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const getUser = async (email, password) => {

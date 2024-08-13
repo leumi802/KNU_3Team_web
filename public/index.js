@@ -9,7 +9,6 @@ const loginButton = document.getElementById("login_button");
 loginButton.addEventListener("click", async () => {
     const email = emailInput.value;
     const password = passwordInput.value;
-
     console.log(email, password);
 
     const fetchLogin = await fetch("/api/login", { 
