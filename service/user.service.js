@@ -1,3 +1,5 @@
+// DB에 접근
+
 const User = require("../schema/user.schema")
 
 // Controller에서 호출
@@ -16,6 +18,17 @@ const getUser = async (email, password) => {
     const user = await User.findOne({});
 };
 
+const getUserByEmail = async (email) => {
+    try{
+    const user = await User.findOne({email});
+    console.log(user); // user 정보가 가져와졌는지 확인
+    return user;
+    } catch(err){
+        return null;
+    }
+}
+
 module.exports = {
     createUser,
+    getUserByEmail,
 };
