@@ -1,9 +1,11 @@
-//사용자로부터 자료를 처음받는 곳
-
+const userController = require("express").Router();
 const bcrypt = require("bcryptjs");
 const { createUser, getUserByEmail } = require("../service/user.service");
-const userController = require("express").Router();
 const jwt = require("jsonwebtoken");
+
+// 404 NotFound
+// 400 BadRequest
+// 401 Unauthorized
 
 // userController.patch("/changepassword", (req, res) => {});
 
@@ -24,24 +26,26 @@ userController.post("/signin", async (req, res) => {
       .status(400)
       .json({ result: false, message: "(!)로그인 정보가 올바르지 않습니다." });
   }
-  //email기준으로 DB에서 유저 데이터 꺼내오기
+
+  // 1. email을 기준으로 DB에서 유저 데이터를 꺼내와야 함.
   const user = await getUserByEmail(email); //email을 기준으로 뽑아오니 인자가 email
   // isExistuser의 값은? User or null, 만약 user정보가 없으면 out
   if (!user) {
     return res
       .status(404)
-      .json({ result: false, message: "(!)회원정보가 없습니다." });
+      .json({ result: false, message: "(!)회원 정보가 없습니다." });
   }
 
-  //User가 실제 있는 구간
+  // 유저 정보 User가 실제 있는 구간
   //IsValidPassword는 암호화된 비번을 비교함, compareSync는 비교해서 bool값으로 반환
-  const IsValidPassword = bcrypt.compareSync(password, user.password);
-  if (IsValidPassword) {
-    // token 같이 끼워넣기
+  const isValidPassword = bcrypt.compareSync(password, user.password);
+  console.log(isValidPassword);
+  if (isValidPassword) {
+    // token을 끼워넣기.
     const token = jwt.sign(
       { email: user.email, nickname: user.nickname },
       process.env.JWT_SECRET
-    );
+    ); // payload: 사용자를 특정할 수 있는 정보..
     return res
       .status(200)
       .json({ result: true, message: "로그인 성공", token });
@@ -95,8 +99,20 @@ userController.post("/", async (req, res) => {
   }
 });
 
-// 404 NotFound
-// 400 BadRequest
-// 401 Unauthorized
+// 토큰 유효성 검증
+userController.post("/mypage", async (req, res) => {
+  const { token } = req.body;
+  console.log(token);
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(verified);
+    return res.status(200).json({ isVerify: true, message: "토큰 확인 완료" });
+  } catch (err) {
+    console.log("검증 실패");
+    return res
+      .status(400)
+      .json({ isVerify: false, message: "(!)유효하지 않은 토큰" });
+  }
+});
 
 module.exports = userController;

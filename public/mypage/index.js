@@ -1,25 +1,30 @@
 // 2) 사용자가 페이지 접근 후, (window.addevent(load)) ok
 window.addEventListener("load", async () => {
   console.log("마이 페이지 로딩 완료.");
+  // localStorage에 있는 token을 꺼내서 (localStorage.getItem("token"); ok
+  const token = localStorage.getItem("token");
+  // token이 가져와졌는지 체크 ㄱㄷ
+  if (token === undefined) {
+    // 오류 뜰 곳
+    alert("(!)토큰이 존재하지 않음.");
+  }
   try {
-    // localStorage에 있는 token을 꺼내서 (localStorage.getItem("token"); ok
-    // token이 가져와졌는지 체크 ㄱㄷ
-    const token = localStorage.getItem("token");
-    if (token === undefined) {
-      // 오류 뜰 곳
-      alert("대충 오류라는 뜻");
+    // 백엔드로 보내서(fetch) ok
+    const verifyResult = await fetch("/api/user/mypage", {
+      method: "post",
+      body: JSON.stringify({ token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (verifyResult.ok) {
+      const data = await verifyResult.json();
     } else {
-      // 백엔드로 보내서(fetch) ok
-      const verifyResult = await fetch("/api/user/mypage", {
-        method: "post",
-        body: JSON.stringify({ token }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      alert("(!)마이페이지 로드 오류");
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    alert("(!)오류 발생");
   }
 });
 
