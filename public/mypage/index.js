@@ -11,7 +11,7 @@ const content = document.getElementById("content");
 mypageButton.addEventListener("click", async () => {
   const token = localStorage.getItem("token");
   try {
-    const verifyResult = await fetch("/api/user/mypage/", {
+    const mypageResult = await fetch("/api/user/mypage/", {
       method: "post",
       body: JSON.stringify({ token }),
       headers: {
