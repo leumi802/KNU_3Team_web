@@ -1,45 +1,44 @@
-
 const fetchProductList = async () => {
-    // product.controller와의 통신을 통해 'product' 데이터를 가져옴
-    const fetchResult = await fetch("/api/product", {
-        method: "get",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (fetchResult.ok) {
-        const fetchData = await fetchResult.json();
-        // fetchData = {return ???}
-        console.log(fetchData);
-        return fetchData.data;
-    } else {
-        return null;
-    }
+  // product.controller와의 통신을 통해 'product' 데이터를 가져옴
+  const fetchResult = await fetch("/api/product", {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (fetchResult.ok) {
+    const fetchData = await fetchResult.json();
+    // fetchData = {return ???}
+    console.log(fetchData);
+    return fetchData.data;
+  } else {
+    return null;
+  }
 };
 
 const productListWrapper = document.getElementById("product_list_wrapper");
 
 const renderProductList = async () => {
-    const productList = await fetchProductList();
-    // productList [] | null
-    if (!productList || productList.lenght === 0) {
-        console.log("empty productList");
-        return;
-    }
-    // productList 가 존재하는 경우.
-    productList.forEach((v) => {
-        const itemElem = document.createElement("div");
-        itemElem.innerHTML = `
+  const productList = await fetchProductList();
+  // productList [] | null
+  if (!productList || productList.lenght === 0) {
+    console.log("empty productList");
+    return;
+  }
+  // productList 가 존재하는 경우.
+  productList.forEach((v) => {
+    const itemElem = document.createElement("div");
+    itemElem.innerHTML = `
             <div>${v.title}</div>
             <div>가격: ${v.price}원</div>
             <div>[상세설명] ${v.description}</div>
             <div>
                 <img src="${v.imgUrl}" />
             </div>
-            <div>재고수량: ${v.stack}(개)</div>
+            <div>재고수량: ${v.stock}(개)</div>
         `;
-        productListWrapper.append(itemElem);
-    });
+    productListWrapper.append(itemElem);
+  });
 };
 
 renderProductList();
@@ -62,11 +61,11 @@ renderProductList();
 // localStorage 에서 토큰 삭제 (localStorage.removeItem() 비스무리한거 삭제하면 됨.)
 
 /**
- * localStorage.getItem()으로 token을 
- * user가 토큰을 갖고 있으면 
+ * localStorage.getItem()으로 token을
+ * user가 토큰을 갖고 있으면
  * 토큰을 꺼내는거 => userController.get
  * 토큰을 검사해서 계
- * 
+ *
  * 백엔드로 볼낼때는 fetch
- * 
+ *
  */
