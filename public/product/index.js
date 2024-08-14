@@ -1,4 +1,5 @@
 const fetchProductList = async () => {
+  // product.controller와의 통신을 통해 `product` 가져옴
   const fetchResult = await fetch("/api/product", {
     method: "get",
     headers: {
@@ -18,7 +19,7 @@ const fetchProductList = async () => {
 const productListWrapper = document.getElementById("product_list_wrapper");
 const renderProductList = async () => {
   const productList = await fetchProductList();
-  // productList [] || null
+  //productList = [] or null
   if (!productList || productList.length === 0) {
     console.log("empty productList");
     return;

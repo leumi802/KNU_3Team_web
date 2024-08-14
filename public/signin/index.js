@@ -5,9 +5,9 @@ const signinButton = document.getElementById("signin_button");
 signinButton.addEventListener("click", async () => {
   const email = signinEmail.value;
   const password = signinPassword.value;
-
+  //fetch 비동기
   try {
-    const signinResult = await fetch("/api/user/signin/", {
+    const signinResult = await fetch("/api/user/signin", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {

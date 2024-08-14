@@ -1,33 +1,24 @@
-// 1, 프론트
-// 사용자가 [마이페이지] 버튼 혹은 직접 url을 입력해서 이동한다.
-// http://localhost:8000/mypage
+// 2) 사용자가 페이지 접근 후, (window.addevent(load)) ok
 window.addEventListener("load", async () => {
   console.log("마이 페이지 로딩 완료.");
-});
-
-const mypageButton = document.getElementById("mypage_button");
-const content = document.getElementById("content");
-
-mypageButton.addEventListener("click", async () => {
+  // localStorage에 있는 token을 꺼내서 (localStorage.getItem("token"); ok
   const token = localStorage.getItem("token");
+  // token이 가져와졌는지 체크 ㄱㄷ
+  if (token === undefined) {
+    // 오류 뜰 곳
+    alert("(!)토큰이 존재하지 않음.");
+  }
   try {
-    const mypageResult = await fetch("/api/user/mypage/", {
+    // 백엔드로 보내서(fetch) ok
+    const verifyResult = await fetch("/api/user/mypage", {
       method: "post",
       body: JSON.stringify({ token }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-
-    if (mypageResult.ok) {
-      const data = await mypageResult.json();
-
-      // 마이페이지 컨텐츠 표시
-      content.innerHTML = `
-                <h1>[마이페이지]</h1>
-                <p>Email : ${data.email}</p>
-                <p>Nickname : ${data.nickname}</p>
-                `;
+    if (verifyResult.ok) {
+      const data = await verifyResult.json();
     } else {
       alert("(!)마이페이지 로드 오류");
     }
@@ -37,16 +28,12 @@ mypageButton.addEventListener("click", async () => {
   }
 });
 
-// 2, 프론트+백엔드
-// 사용자가 페이지 접근 후, localStorage에 있는 token을 꺼내서
-// 백엔드로 보내서, 해당 토큰의 유효성을 검증한다.
-// JWT.verity(token, process.env.JWT_SECRET)
-
-// 3, 백엔드
-// 유효성 검증 결과에 따른 사용자 인증여부를 프론트로 반환한다.
-// res.json({isVerify:true})
-
-// 4, 프론트
-// 3번으로부터 받은 응답값을 통해서 token이 유효하다면
-// 그대로 페이지 사용을 하게한다. 만약 token이 유효x면
-// signin 페이지로 보내준다.
+// (프론트+백)
+// 2) 사용자가 페이지 접근 후, (window.eventlis(load)) ok
+// localStorage에 있는 token을 꺼내서 (localStorage.getItem("token",.token);)
+// 백엔드로 보내서(fetch), 해당 토큰을 유효성을 검증한다. (verify)
+//
+// window.eventlisn 이벤트 접근 감지(load)
+// local getitem 토큰 가져오기
+// verify(tkn, process.env.JWT_SECRET) 유효성 검증
+//
