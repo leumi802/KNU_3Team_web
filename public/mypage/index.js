@@ -4,7 +4,7 @@ window.addEventListener("load", async () => {
   // localStorage에 있는 token을 꺼내서 (localStorage.getItem("token"); ok
   const token = localStorage.getItem("token");
   // token이 가져와졌는지 체크 ㄱㄷ
-  if (token === undefined) {
+  if (token == undefined) {
     // 오류 뜰 곳
     alert("(!)토큰이 존재하지 않음.");
   }
@@ -17,10 +17,19 @@ window.addEventListener("load", async () => {
         "Content-Type": "application/json",
       },
     });
-    if (!verifyResult.ok) {
+    if (verifyResult.ok) {
+      const data = await verifyResult.json();
+      console.log(data);
+      const content = document.getElementById("content");
+      content.innerHTML = `
+                <h1>[마이페이지]</h1>
+                <p>Email : ${data.email}</p>
+                <p>Nickname : ${data.nickname}</p>
+                `;
+    } else {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-      localStorage.removeItem('token'); // 'token'은 현재 사용중이던 토큰을 사용
-      window.location.href = 'http://localhost:8000/signin';
+      localStorage.removeItem("token"); // 'token'은 현재 사용중이던 토큰을 사용
+      window.location.href = "http://localhost:8000/signin";
     }
   } catch (err) {
     console.error(err);
