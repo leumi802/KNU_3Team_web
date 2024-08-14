@@ -1,6 +1,5 @@
 const signinEmail = document.getElementById("signin_email");
 const signinPassword = document.getElementById("signin_password");
-
 const signinButton = document.getElementById("signin_button");
 
 signinButton.addEventListener("click", async () => {
@@ -8,22 +7,22 @@ signinButton.addEventListener("click", async () => {
   const password = signinPassword.value;
   //fetch 비동기
   try {
-    const signintResult = await fetch("/api/user/signin", {
+    const signinResult = await fetch("/api/user/signin", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if (signintResult.ok) {
-      const result = await signintResult.json();
-      console.log("로그인 성공", result); //체크
-      localStorage.setItem("token", result.token); //토큰 저장
+    if (signinResult.ok) {
+      const result = await signinResult.json();
+      console.log("로그인 성공", result);
+      localStorage.setItem("token", result.token);
     } else {
-      alert("(!)로그인 오류");
+      alert("(!)로그인 오류.");
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
     alert("(!)로그인 오류");
   }
 });
