@@ -6,7 +6,7 @@ const productController = require("express").Router();
 // 3) 페이지네이션 적용(끊어서 보내주는 역할..?)
 
 productController.get("/", (req, res) => {
-  return res.json({ result: true, data: {} });
+  return res.json({ result: true, data: [] });
 });
 
 // 바깥에서 참조할 수 있게끔 해줌
