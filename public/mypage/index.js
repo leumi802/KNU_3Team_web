@@ -21,6 +21,7 @@ window.addEventListener("load", async () => {
       const data = await verifyResult.json();
     } else {
       alert("(!)마이페이지 로드 오류");
+      responseVerification(verifyResult);
     }
   } catch (err) {
     console.error(err);
@@ -37,3 +38,16 @@ window.addEventListener("load", async () => {
 // local getitem 토큰 가져오기
 // verify(tkn, process.env.JWT_SECRET) 유효성 검증
 //
+
+// const response = ("3)으로 부터 return 받은 값 저장");
+// 새로운 페이지 시작 시 계속 이 함수 사용..?
+function responseVerification(response) {
+  if (response.isVerify) {
+    // 토큰이 유효한 경우, 현재 페이지를 계속 사용
+    console.log("토큰이 유효합니다. 마이페이지를 사용하세요.");
+  } else {
+    console.log("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
+    localStorage.removeItem('token'); // 'token'은 현재 사용중이던 토큰을 사용
+    window.location.href = 'http://localhost:8000/signin';
+  }
+}
