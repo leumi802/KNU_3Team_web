@@ -21,7 +21,7 @@ const getUserByEmail = async (email) => {
     const user = await User.findOne({ email });
     console.log(user);
     return user;
-  } catch (err) {
+  } catch (Err) {
     return null;
   }
 };
