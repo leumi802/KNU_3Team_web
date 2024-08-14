@@ -1,3 +1,7 @@
+window.addEventListener("load", () => {
+  console.log("로그인 페이지 로딩 완료.");
+});
+
 const signinEmail = document.getElementById("signin_email");
 const signinPassword = document.getElementById("signin_password");
 const signinButton = document.getElementById("signin_button");
