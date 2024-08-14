@@ -1,0 +1,7 @@
+.product {
+  background-color: beige;
+  border-radius: 10px;
+}
+.product div {
+  text-align: center;
+}

@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.static("public"));
 console.log("exec express");
 app.use("/api", apiController);
-
+console.log("exec express");
 app.post("/api/login", (req, res) => {
   const body = req.body;
   const { email, password } = body;
