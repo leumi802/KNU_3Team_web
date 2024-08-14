@@ -91,4 +91,20 @@ userController.post("/", async (req, res) => {
   }
 });
 
+// 토큰 유효성 검증
+userController.post("/mypage", async (req, res) => {
+  const { token } = req.body;
+  console.log(token);
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(verified);
+    return res.status(200).json({ isVerify: true, message: "토큰 확인 완료" });
+  } catch (err) {
+    console.log("검증 실패");
+    return res
+      .status(400)
+      .json({ isVerify: false, message: "(!)유효하지 않은 토큰" });
+  }
+});
+
 module.exports = userController;
