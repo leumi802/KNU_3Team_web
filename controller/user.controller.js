@@ -152,14 +152,12 @@ userController.post("/", async (req, res) => {
 // 토큰 유효성 검증
 userController.post("/mypage", async (req, res) => {
   const { token } = req.body;
-  const { email, nickname } = req.body;
   console.log(token);
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     console.log(verified);
 
     const { email, nickname } = verified;
-
     console.log("Email:", email, "Nickname:", nickname);
 
     const user = await getUserByMypage(email, nickname);
