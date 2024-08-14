@@ -47,7 +47,7 @@ function responseVerification(response) {
     console.log("토큰이 유효합니다. 마이페이지를 사용하세요.");
   } else {
     console.log("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-    localStorage.removeItem('token'); // 'token'은 현재 사용중이던 토큰을 사용
-    window.location.href = 'http://localhost:8000/signin';
+    localStorage.removeItem("token"); // 'token'은 현재 사용중이던 토큰을 사용
+    window.location.href = "http://localhost:8000/signin";
   }
 }
