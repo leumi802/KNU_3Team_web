@@ -62,7 +62,7 @@ renderProductList();
 // localStorage 에서 토큰 삭제 (localStorage.removeItem() 비스무리한거 삭제하면 됨.)
 
 /**
- * localStorage.getItem()
+ * localStorage.getItem()으로 token을 
  * user가 토큰을 갖고 있으면 
  * 토큰을 꺼내는거 => userController.get
  * 토큰을 검사해서 계
