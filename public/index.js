@@ -11,10 +11,10 @@ loginButton.addEventListener("click", async () => {
     const password = passwordInput.value;
     console.log(email, password);
 
-    const fetchLogin = await fetch("/api/login", { 
-        method: "post", 
-        body: JSON.stringify({ 
-            email: email, 
+    const fetchLogin = await fetch("/api/login", {
+        method: "post",
+        body: JSON.stringify({
+            email: email,
             password: password,
         }),
         headers: {

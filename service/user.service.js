@@ -16,6 +16,19 @@ const getUser = async (email, password) => {
     const user = await User.findOne({});
 };
 
+// 얘는 DB에 직접 접근하는 애임
+const getUserByEmail = async (email) => {
+    try {
+        const user = await User.findOne({ email });
+        console.log(user);
+        return user;
+    } catch (err) {
+        return null;
+    }
+
+};
+
 module.exports = {
     createUser,
+    getUserByEmail,
 };
