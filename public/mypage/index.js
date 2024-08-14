@@ -17,8 +17,7 @@ window.addEventListener("load", async () => {
         "Content-Type": "application/json",
       },
     });
-    if (verifyResult.ok) {
-      const data = await verifyResult.json();
+    if (!verifyResult.ok) {
     } else {
       alert("(!)마이페이지 로드 오류");
       responseVerification(verifyResult);
@@ -46,7 +45,7 @@ function responseVerification(response) {
     // 토큰이 유효한 경우, 현재 페이지를 계속 사용
     console.log("토큰이 유효합니다. 마이페이지를 사용하세요.");
   } else {
-    console.log("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
+    alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
     localStorage.removeItem("token"); // 'token'은 현재 사용중이던 토큰을 사용
     window.location.href = "http://localhost:8000/signin";
   }
