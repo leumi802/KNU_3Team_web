@@ -1,0 +1,119 @@
+/* 전체 페이지 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* 페이지 제목 스타일 */
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 2em;
+  color: #333;
+}
+
+p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #666;
+}
+
+/* 섹션 스타일 */
+section {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 입력 필드 스타일 */
+input[type="text"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 구매자 정보와 받는사람 정보 제목 스타일 */
+section p {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 상품 정보 섹션 스타일 */
+#product_to_pay {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 상품 정보 각 항목의 스타일 */
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.product-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-price {
+  font-size: 1.1em;
+  color: #666;
+}
+
+.stock-value {
+  font-size: 1em;
+  color: #888;
+}
+
+.product-total-price {
+  font-size: 1.2em;
+  color: #e74c3c;
+  margin-top: 10px;
+}
+
+/* 총합 가격 스타일 */
+#total_price {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #2c3e50;
+}
+
+/* 결제 버튼 스타일 */
+button#order {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 1.2em;
+  color: #fff;
+  background-color: #27ae60;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button#order:hover {
+  background-color: #219150;
+}
