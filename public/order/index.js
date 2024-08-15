@@ -32,6 +32,8 @@ window.addEventListener("load", async () => {
     const productList = await fetchProductList();
 
     if (orderInfo.length === 0) {
+      alert("결제할 상품이 없습니다.");
+      window.location.href = "/cart";
       throw new Error("결제할 상품이 없습니다.");
     }
 
