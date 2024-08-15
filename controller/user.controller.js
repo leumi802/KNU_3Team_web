@@ -11,6 +11,12 @@ const jwt = require("jsonwebtoken");
 // 400 BadRequest
 // 401 Unauthorized
 
+// 로그인
+// 몽고디비에 있는 회원정보의 값과 비교 (고유한 값 email끼리 서로 비교해 DB에 값을 받아와 회원정보의 값과 비교)
+// 1. 몽고디비에서 Email을 기준으로 회원정보를 가져온다.
+// 2. 사용자가 입력한 password와 서로 일치한지 비교한다.
+// 3. 입력이 일치할 시 로그인 성공, 아닐시 실패 (통과할때 토큰 껴주기(로그인 유지))
+// 4. 끝!
 userController.post("/signin", async (req, res) => {
   // 사용자로부터 email 과 password를 받음
   const { email, password } = req.body;

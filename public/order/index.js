@@ -62,7 +62,22 @@ window.addEventListener("load", async () => {
   try {
     const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
     const productList = await fetchProductList();
-
+    const Result = await fetch("/api/user/mypage", {
+      method: "post",
+      body: JSON.stringify({ token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (Result.ok) {
+      const data = await Result.json();
+      setContent(data);
+      return data;
+    } else {
+      alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
+      localStorage.removeItem("token"); // 현재 토큰 제거
+      window.location.href = "http://localhost:8000/signin";
+    }
     if (orderInfo.length === 0) {
       alert("결제할 상품이 없습니다.");
       window.location.href = "/cart";
@@ -85,7 +100,8 @@ window.addEventListener("load", async () => {
 
     await calculateTotal(); // 총합 계산
   } catch (error) {
-    console.error(error.message);
+    console.error("Fetch 오류:", error);
+    return [];
   }
 });
 
@@ -98,11 +114,11 @@ const setContent = (data) => {
   const getname = document.getElementById("getname");
   const getadress = document.getElementById("getadress");
   const getphone = document.getElementById("getphone");
-  const products = JSON.parse(localStorage.getItem("cart")) || [];
+  const products = JSON.parse(localStorage.getItem("orderInfo")) || [];
 
   const payButton = document.getElementById("order");
 
-  payButton.addEventListener("click", () => {
+  payButton.addEventListener("click", async () => {
     if (!postname.value) {
       alert("구매자 정보를 입력해주세요.");
     } else if (!postemail.value || !postemail.value.includes("@")) {
@@ -116,7 +132,6 @@ const setContent = (data) => {
     } else if (!getphone.value) {
       alert("받는사람의 전화번호를 입력해주세요.");
     } else {
-      alert("성공");
       const user = {
         buyerId: postid,
         buyerName: postname.value,
@@ -127,8 +142,23 @@ const setContent = (data) => {
         recipientPhoneNum: getphone.value,
         products: products,
       };
-      // 대충 여기서 fetch활용해서 method:"post", body:JSON({user}), headers: 뭐였지
-      // 해주면 될듯 함
+      // fetch를 사용하여 POST 요청 보내기
+      const Result = await fetch("/api/order/", {
+        method: "POST", // 메서드는 대문자로 작성
+        body: JSON.stringify(user), // user 객체를 JSON 문자열로 변환
+        headers: {
+          "Content-Type": "application/json", // 요청의 콘텐츠 타입 설정
+        },
+      });
+
+      // 응답 처리
+      if (Result.ok) {
+        const data = await Result.json();
+        console.log(data); // 서버로부터 받은 데이터 처리
+      } else {
+        console.error("서버 오류:", Result.status); // 오류 처리
+      }
+      alert("결제 되었습니다.");
     }
   });
 };
