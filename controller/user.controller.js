@@ -11,11 +11,6 @@ const jwt = require("jsonwebtoken");
 // 400 BadRequest
 // 401 Unauthorized
 
-// userController.patch("/changepassword", (req, res) => {});
-// 로그인도 post로 작성한 이유 : body를 사용할 수 있ㄴ...?get으로 작성시 url에 password가 노출이 됨.
-// email을 기준으로 DB에서 회원정보 데이터를 꺼내와서 EXPRESS에서 검증을함.
-// 클라이언트에서 사용자가 입력한 password와 DB password와 비교를 함(EXPRESS에서) 여기서 똑같으면 로그인 성공, 아니면 실패
-//
 // 로그인
 // 몽고디비에 있는 회원정보의 값과 비교 (고유한 값 email끼리 서로 비교해 DB에 값을 받아와 회원정보의 값과 비교)
 // 1. 몽고디비에서 Email을 기준으로 회원정보를 가져온다.
