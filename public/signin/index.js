@@ -21,7 +21,7 @@ signinButton.addEventListener("click", async () => {
       localStorage.setItem("token", result.token);
       window.location.href = "/product";
     } else {
-      alert("(!)로그인 실패");
+      alert("(!)로그인 오류");
     }
   } catch (err) {
     console.log(err);

@@ -20,7 +20,7 @@ window.addEventListener("load", async () => {
     if (verifyResult.ok) {
       const data = await verifyResult.json();
       setContent(data);
-      console.log(data);
+      // console.log(data);
     } else {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
       localStorage.removeItem("token"); // 현재 토큰 제거
@@ -57,7 +57,6 @@ document.getElementById("order").addEventListener("click", () => {
 
 document.getElementById("logout_btn").addEventListener("click", () => {
   localStorage.removeItem("token"); // 토큰 제거
-  localStorage.removeItem("cart"); // 장바구니 제거
   alert("로그아웃 되었습니다");
   window.location.href = "/signin"; // 로그인 페이지로 이동
 });
