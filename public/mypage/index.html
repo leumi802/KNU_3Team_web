@@ -3,16 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Page</title>
     <script src="./index.js" defer></script>
+    <link rel="stylesheet" href="./index.css" />
+    <title>마이페이지</title>
   </head>
   <body>
-    <button id="mypage_button" onclick="goToMyPage()">마이페이지</button>
-    <div id="content"></div>
-    <script>
-      function goToMyPage() {
-        window.location.href = "http://localhost:8000/mypage";
-      }
-    </script>
+    <div id="wrapper">
+      <header><h1>마이페이지</h1></header>
+      <div id="content_header">
+        <div id="user_information">
+          <div id="user_profile"></div>
+          <div id="user_text">
+            <h1 id="user_nickname"></h1>
+            <h3 id="user_email"></h3>
+          </div>
+        </div>
+        <div id="nav">
+          <p id="product">쇼핑하기</p>
+          <div id="cart_div">
+            <p id="cart">장바구니</p>
+            <p id="cart_num"></p>
+          </div>
+          <p id="order">결제하기</p>
+        </div>
+      </div>
+      <!-- <div id="content"></div> -->
+      <button id="logout_btn">로그아웃</button>
+    </div>
   </body>
 </html>

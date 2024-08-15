@@ -1,0 +1,186 @@
+* {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  margin: 0;
+  gap: 10px;
+
+  position: relative;
+
+  background: #ffffff;
+
+  height: 100%;
+}
+
+button:hover,
+#product:hover,
+#cart:hover,
+#order:hover {
+  cursor: pointer;
+}
+
+#wrapper {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 70px;
+
+  max-width: 520px;
+}
+
+header h1 {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  /* 마이페이지 */
+  font-size: 50px;
+
+  text-align: center;
+
+  color: #000000;
+
+  width: 100%;
+}
+
+#content_header {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 35px;
+
+  width: 100%;
+}
+
+#user_information {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 400px;
+  width: 100%;
+}
+
+#user_profile {
+  width: 150px;
+  height: 150px;
+
+  background: #006aff;
+  border-radius: 40px;
+}
+
+#user_text {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px;
+}
+
+#user_nickname {
+  font-size: 35px;
+
+  text-align: center;
+
+  color: #000000;
+}
+
+#user_email {
+  font-size: 20px;
+
+  text-align: center;
+
+  color: #000000;
+}
+
+#nav {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 100px;
+
+  max-width: 450px;
+  width: 100%;
+}
+
+#cart_div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  margin: 0 auto;
+}
+
+#cart_num {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  gap: 10px;
+
+  background: #006aff;
+  border-radius: 5px;
+
+  /* num */
+
+  font-size: 20px;
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+#logout_btn {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  background-color: #ffffff;
+  border: 1px solid #ff0004;
+  border-radius: 30px;
+
+  /* 로그아웃 */
+
+  font-size: 15px;
+  text-align: center;
+
+  color: #ff0004;
+}
