@@ -27,7 +27,7 @@ window.addEventListener("load", async () => {
   if (token === null) {
     // 오류 뜰 곳
     alert("(!)토큰이 존재하지 않음.");
-    window.location.href = "http://localhost:8000/signin";
+    window.location.href = "/signin";
     return; // 페이지 이동 시 이후 코드 실행 방지
   }
 
@@ -91,7 +91,7 @@ function renderProductDetail(product, quantity) {
   const productImage = productDiv.querySelector(".product-image img");
   if (productImage) {
     productImage.addEventListener("click", () => {
-      window.location.href = `http://localhost:8000/product/detail?id=${product.productId}`;
+      window.location.href = `/product/detail?id=${product.productId}`;
     });
   }
 
