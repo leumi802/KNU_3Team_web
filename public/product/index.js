@@ -1,4 +1,3 @@
-
 const fetchProductList = async () => {
     // product.controller와의 통신을 통해 'product' 데이터를 가져옴
     const fetchResult = await fetch("/api/product", {
@@ -66,11 +65,11 @@ renderProductList();
 // localStorage 에서 토큰 삭제 (localStorage.removeItem() 비스무리한거 삭제하면 됨.)
 
 /**
- * localStorage.getItem()으로 token을 
- * user가 토큰을 갖고 있으면 
+ * localStorage.getItem()으로 token을
+ * user가 토큰을 갖고 있으면
  * 토큰을 꺼내는거 => userController.get
  * 토큰을 검사해서 계
- * 
+ *
  * 백엔드로 볼낼때는 fetch
- * 
+ *
  */
