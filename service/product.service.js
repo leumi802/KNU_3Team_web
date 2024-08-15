@@ -10,6 +10,18 @@ const getProductList = async () => {
   }
 };
 
+const getProductListById = async (productId) => {
+  // 'Product' 모델을 통해, MongoDB에서 데이터를 가져와야함.
+  try {
+    const productList = await Product.find({ productId });
+    return productList;
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
+};
+
 module.exports = {
   getProductList,
+  getProductListById,
 };

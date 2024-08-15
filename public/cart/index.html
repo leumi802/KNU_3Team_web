@@ -2,19 +2,27 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart</title>
-    <script src="./index.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="./index.js" defer></script>
+  <link rel="stylesheet" href="./gpt.css" />
+  <title>장바구니</title>
 </head>
 
 <body>
-    <p>장바구니 페이지</p>
+  <div id="wrapper">
+    <header>
+      <h1 id="service_name">Team3</h1>
+      <div id="nav">
+        <p id="mypage">마이페이지</p>
+        <p id="cart">장바구니</p>
+      </div>
+    </header>
     <section id="cart_detail"></section>
     <p id="total_price"></p>
     <div id="button"></div>
-    <div id="orderButton"></div>
-
+    <button id="pay_button">결제하기</button>
+  </div>
 </body>
 
 </html>

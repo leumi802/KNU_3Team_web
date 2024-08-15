@@ -24,7 +24,7 @@ window.addEventListener("load", async () => {
     } else {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
       localStorage.removeItem("token"); // 현재 토큰 제거
-      window.location.href = "http://localhost:8000/signin";
+      window.location.href = "/signin";
     }
   } catch (err) {
     console.error(err);
@@ -42,22 +42,22 @@ const setContent = (data) => {
 
 document.getElementById("product").addEventListener("click", () => {
   // 쇼핑하기 버튼
-  window.location.href = "http://localhost:8000/product"; // 상품 리스트 페이지로 이동
+  window.location.href = "/product"; // 상품 리스트 페이지로 이동
 });
 
 document.getElementById("cart").addEventListener("click", () => {
   // 장바구니 버튼
-  window.location.href = "http://localhost:8000/cart"; // 장바구니 페이지로 이동
+  window.location.href = "/cart"; // 장바구니 페이지로 이동
 });
 
 document.getElementById("order").addEventListener("click", () => {
   // 결제하기 버튼
-  window.location.href = "http://localhost:8000/order"; // 결제 페이지로 이동
+  window.location.href = "/order"; // 결제 페이지로 이동
 });
 
 document.getElementById("logout_btn").addEventListener("click", () => {
   localStorage.removeItem("token"); // 토큰 제거
   localStorage.removeItem("cart");  // 장바구니 제거
   alert("로그아웃 되었습니다");
-  window.location.href = "http://localhost:8000/signin"; // 로그인 페이지로 이동
+  window.location.href = "/signin"; // 로그인 페이지로 이동
 });

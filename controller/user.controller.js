@@ -72,7 +72,7 @@ userController.post("/", async (req, res) => {
   if (!email.includes("@")) {
     return res
       .status(400)
-      .json({ isError: true, message: "잘못된 email 입니다." }); // http status code
+      .json({ isError: true, message: "잘못된 email 입니다." });
   }
 
   // 2. password 검증
@@ -90,8 +90,8 @@ userController.post("/", async (req, res) => {
       .json({ isError: true, message: "잘못된 닉네임 입니다." });
   }
 
-  const salt = bcrypt.genSaltSync(10); // 너무 많이 돌리면 서버가 멈춘다.
-  const hashedPassword = bcrypt.hashSync(password, salt); // 2번째 인자는 salt (옵션). salt를 넣으면 더 복잡한 암호화가 된다.
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
 
   const user = {
     email,

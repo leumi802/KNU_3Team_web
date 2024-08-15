@@ -105,7 +105,7 @@ header p {
   background-color: #e6e6e6;
 }
 
-#product_list_wrapper {
+#cart_detail {
   /* Auto layout */
   display: flex;
   flex-direction: row;
@@ -143,14 +143,14 @@ header h1:hover {
   cursor: pointer;
 }
 
-#product_title,
-#product_description,
-#product_price,
-#product_stock {
+.product_title,
+.product_description,
+.product_price,
+.product_stock {
   padding: 0px 10px;
 }
 
-#product_title {
+.product_title {
   /* Auto layout */
   display: flex;
   flex-direction: row;
