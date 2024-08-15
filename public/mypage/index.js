@@ -19,6 +19,13 @@ window.addEventListener("load", async () => {
     });
     if (verifyResult.ok) {
       const data = await verifyResult.json();
+      console.log(data);
+      const content = document.getElementById("content");
+      content.innerHTML = `
+                <h1>[마이페이지]</h1>
+                <p>Email : ${data.email}</p>
+                <p>Nickname : ${data.nickname}</p>
+                `;
     } else {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
       localStorage.removeItem("token"); // 현재 토큰 제거
@@ -29,26 +36,3 @@ window.addEventListener("load", async () => {
     alert("(!)오류 발생");
   }
 });
-
-// (프론트+백)
-// 2) 사용자가 페이지 접근 후, (window.eventlis(load)) ok
-// localStorage에 있는 token을 꺼내서 (localStorage.getItem("token",.token);)
-// 백엔드로 보내서(fetch), 해당 토큰을 유효성을 검증한다. (verify)
-//
-// window.eventlisn 이벤트 접근 감지(load)
-// local getitem 토큰 가져오기
-// verify(tkn, process.env.JWT_SECRET) 유효성 검증
-//
-
-// const response = ("3)으로 부터 return 받은 값 저장");
-// 새로운 페이지 시작 시 계속 이 함수 사용..?
-function responseVerification(response) {
-  if (response.isVerify) {
-    // 토큰이 유효한 경우, 현재 페이지를 계속 사용
-    console.log("토큰이 유효합니다. 마이페이지를 사용하세요.");
-  } else {
-    console.log("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-    localStorage.removeItem("token"); // 'token'은 현재 사용중이던 토큰을 사용
-    window.location.href = "http://localhost:8000/signin";
-  }
-}
