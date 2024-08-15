@@ -34,6 +34,15 @@ button:hover,
   cursor: pointer;
 }
 
+#nav div {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#nav div:hover {
+  background-color: #e6e6e6;
+}
+
 #wrapper {
   /* Auto layout */
   display: flex;
@@ -139,8 +148,10 @@ header h1 {
   align-items: center;
   padding: 0px;
   gap: 10px;
+}
 
-  margin: 0 auto;
+#cart_div p {
+  margin: 0;
 }
 
 #cart_num {
@@ -174,7 +185,7 @@ header h1 {
   gap: 10px;
 
   background-color: #ffffff;
-  border: 1px solid #ff0004;
+  border: 2px solid #ff0004;
   border-radius: 30px;
 
   /* 로그아웃 */
@@ -183,4 +194,9 @@ header h1 {
   text-align: center;
 
   color: #ff0004;
+}
+
+#logout_btn:hover {
+  border-color: #d20004;
+  color: #d20004;
 }
