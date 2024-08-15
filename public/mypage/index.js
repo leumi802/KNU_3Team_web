@@ -19,7 +19,7 @@ window.addEventListener("load", async () => {
     });
     if (verifyResult.ok) {
       const data = await verifyResult.json();
-      console.log(data);
+      // console.log(data);
       const content = document.getElementById("content");
       content.innerHTML = `
                 <h1>[마이페이지]</h1>
