@@ -22,8 +22,7 @@ body {
 
   position: relative;
 
-  background: #ffffff;
-
+  background-color: aliceblue;
   height: 100%;
 }
 
@@ -184,7 +183,7 @@ header h1 {
   padding: 10px;
   gap: 10px;
 
-  background-color: #ffffff;
+  background-color: aliceblue;
   border: 2px solid #ff0004;
   border-radius: 30px;
 

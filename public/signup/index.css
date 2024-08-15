@@ -22,7 +22,7 @@ body {
 
   position: relative;
 
-  background: #ffffff;
+  background-color: aliceblue;
 
   height: 100%;
 }
@@ -88,7 +88,7 @@ button:hover {
   padding: 5px 0px;
   gap: 10px;
 
-  background-color: white;
+  background-color: aliceblue;
   border-bottom: 1px solid #006aff;
   text-align: center;
 

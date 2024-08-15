@@ -6,6 +6,10 @@
   outline: none;
 }
 
+*:hover {
+  cursor: default;
+}
+
 html {
   height: 100%;
 }
@@ -46,6 +50,7 @@ header {
 
   background: #ffffff;
   position: fixed;
+  border-bottom: 2px solid black;
 }
 
 header h1,
@@ -131,6 +136,11 @@ header p {
 #product_wrapper div,
 #product_wrapper div img {
   width: 100%;
+}
+
+#product_wrapper div img:hover,
+#nav p:hover {
+  cursor: pointer;
 }
 
 #product_title,
