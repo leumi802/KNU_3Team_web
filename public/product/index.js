@@ -42,7 +42,6 @@ const renderProductList = async () => {
     goto.addEventListener("click", () => {
       window.location.href = `http://localhost:8000/product/detail?id=${v.productId}`;
     });
-    console.log();
   });
 };
 

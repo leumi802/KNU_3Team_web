@@ -7,7 +7,7 @@ window.addEventListener("load", async () => {
 
   try {
     // 백엔드로 상품 상세 데이터 요청
-    const verifyResult = await fetch(`/api/product?id=${id}`, {
+    const verifyResult = await fetch(`/api/product`, {
       method: "get", // GET 요청
       headers: {
         "Content-Type": "application/json",
@@ -23,17 +23,12 @@ window.addEventListener("load", async () => {
     const productData = await verifyResult.json();
 
     // 상품 데이터가 존재하는 경우 렌더링
-    const proList = productData.data;
-    let cnt = 0;
-    proList.forEach((v) => {
-      // id가 일치하는지 확인
-      if (productData && v.productId === parseInt(id)) {
-        cnt++;
-        renderProductDetail(v);
-      }
-    });
-    //상품의 코드가 없거나 2개 이상일때
-    if (cnt !== 1) {
+    const proList = productData.data[id];
+    console.log(proList);
+    if (productData && proList.productId === parseInt(id)) {
+      renderProductDetail(proList);
+    } else {
+      //상품의 코드가 없거나 2개 이상일때
       console.error("상품을 찾을 수 없습니다.");
     }
   } catch (error) {
