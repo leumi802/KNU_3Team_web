@@ -26,7 +26,11 @@ window.addEventListener("load", async () => {
   if (token === null) {
     alert("(!)토큰이 존재하지 않음.");
     window.location.href = "/signin";
+<<<<<<< HEAD
+    return;
+=======
     return; // 페이지 이동 시 이후 코드 실행 방지
+>>>>>>> 497c4a1b0f5cdf3f4575d4b69bfc5b7ef3d14b8f
   }
 
   try {
