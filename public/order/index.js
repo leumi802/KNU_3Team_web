@@ -51,43 +51,43 @@ window.addEventListener("load", async () => {
   }
 });
 
-window.addEventListener("load", async () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("(!)토큰이 존재하지 않음.");
-    window.location.href = "/signin";
-    return;
-  }
+// window.addEventListener("load", async () => {
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     alert("(!)토큰이 존재하지 않음.");
+//     window.location.href = "/signin";
+//     return;
+//   }
 
-  try {
-    const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
-    const productList = await fetchProductList();
+//   try {
+//     const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
+//     const productList = await fetchProductList();
 
-    if (orderInfo.length === 0) {
-      alert("결제할 상품이 없습니다.");
-      window.location.href = "/cart";
-      throw new Error("결제할 상품이 없습니다.");
-    }
+//     if (orderInfo.length === 0) {
+//       alert("결제할 상품이 없습니다.");
+//       window.location.href = "/cart";
+//       throw new Error("결제할 상품이 없습니다.");
+//     }
 
-    for (const { productId, quantity } of orderInfo) {
-      const product = productList.find((item) => item.productId === productId);
-      if (product) {
-        const total = await calculateTotalForProduct(
-          productId,
-          productList,
-          orderInfo
-        );
-        renderProductDetail(product, quantity, total);
-      } else {
-        console.error(`(!)ProductId ${productId}가 없습니다.`);
-      }
-    }
+//     for (const { productId, quantity } of orderInfo) {
+//       const product = productList.find((item) => item.productId === productId);
+//       if (product) {
+//         const total = await calculateTotalForProduct(
+//           productId,
+//           productList,
+//           orderInfo
+//         );
+//         renderProductDetail(product, quantity, total);
+//       } else {
+//         console.error(`(!)ProductId ${productId}가 없습니다.`);
+//       }
+//     }
 
-    await calculateTotal(); // 총합 계산
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+//     await calculateTotal(); // 총합 계산
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// });
 
 // 구매자의 ID를 가져오는 함수 정의
 const setContent = (data) => {
@@ -102,7 +102,7 @@ const setContent = (data) => {
 
   const payButton = document.getElementById("order");
 
-  payButton.addEventListener("click", () => {
+  payButton.addEventListener("click", async () => {
     if (!postname.value) {
       alert("구매자 정보를 입력해주세요.");
     } else if (!postemail.value || !postemail.value.includes("@")) {
@@ -127,8 +127,22 @@ const setContent = (data) => {
         recipientPhoneNum: getphone.value,
         products: products,
       };
-      // 대충 여기서 fetch활용해서 method:"post", body:JSON({user}), headers: 뭐였지
-      // 해주면 될듯 함
+      // fetch를 사용하여 POST 요청 보내기
+      const Result = await fetch("/api/order/", {
+        method: "POST", // 메서드는 대문자로 작성
+        body: JSON.stringify(user), // user 객체를 JSON 문자열로 변환
+        headers: {
+          "Content-Type": "application/json", // 요청의 콘텐츠 타입 설정
+        },
+      });
+
+      // 응답 처리
+      if (Result.ok) {
+        const data = await Result.json();
+        console.log(data); // 서버로부터 받은 데이터 처리
+      } else {
+        console.error("서버 오류:", Result.status); // 오류 처리
+      }
     }
   });
 };
