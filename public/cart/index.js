@@ -28,7 +28,9 @@ window.addEventListener("load", async () => {
     // 오류 뜰 곳
     alert("(!)토큰이 존재하지 않음.");
     window.location.href = "http://localhost:8000/signin";
+    return; // 페이지 이동 시 이후 코드 실행 방지
   }
+
   try {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const productList = await fetchProductList(); // 상품 목록을 먼저 가져옵니다
@@ -53,6 +55,8 @@ window.addEventListener("load", async () => {
         console.error(`Product Id ${productId} not found in product list`);
       }
     });
+
+    // 총합 계산
     await calculateTotal();
   } catch (error) {
     console.error("Fetch 오류:", error.message);
@@ -73,6 +77,7 @@ function renderProductDetail(product, quantity) {
     <div class="product-image">
       <img src="${product.imgUrl}" data-product-id="${product.productId}" />
     </div>
+    <input type="checkbox" class="select-product" checked />
     <input type="button" class="minus" value="-" />
     <span class="stock-value">${quantity}개</span>
     <input type="button" class="plus" value="+" />
@@ -87,6 +92,14 @@ function renderProductDetail(product, quantity) {
   if (productImage) {
     productImage.addEventListener("click", () => {
       window.location.href = `http://localhost:8000/product/detail?id=${product.productId}`;
+    });
+  }
+
+  // 체크박스 상태 변화 감지
+  const checkbox = productDiv.querySelector(".select-product");
+  if (checkbox) {
+    checkbox.addEventListener("change", async () => {
+      await calculateTotal(); // 체크박스 상태 변경 시 총합 재계산
     });
   }
 }
@@ -180,10 +193,11 @@ const calculateTotal = async () => {
 
     cart.forEach(({ productId, quantity }) => {
       const product = productList.find((v) => v.productId === productId);
-      if (product) {
+      const isSelected = document.querySelector(
+        `.product-${productId} .select-product`
+      )?.checked;
+      if (product && isSelected) {
         total += product.price * quantity;
-      } else {
-        console.error(`Product Id ${productId} not found`);
       }
     });
 
@@ -203,12 +217,12 @@ const calculateTotal = async () => {
 
 // "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
 const buttonDiv = document.getElementById("button");
-const addCartButton = document.createElement("button");
-addCartButton.innerHTML = "쇼핑 계속하기";
+const continueShoppingButton = document.createElement("button");
+continueShoppingButton.innerHTML = "쇼핑 계속하기";
 
-addCartButton.addEventListener("click", () => {
+continueShoppingButton.addEventListener("click", () => {
   alert("쇼핑을 계속합니다.");
   window.location.href = "/product";
 });
 
-buttonDiv.appendChild(addCartButton);
+buttonDiv.appendChild(continueShoppingButton);
