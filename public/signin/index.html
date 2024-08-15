@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./index.js" defer></script> <!--defer가 없으면 읽을 대상이 없어서 안됨...?-->
+    <script src="./index.js" defer></script>
+    <link rel="stylesheet" href="./index.css"></link>
     <title>Document</title>
 </head>
 
 <body>
-    <input id="signin_email" placeholder="email을 입력해주세요." />
-    <input id="signin_password" type="password" placeholder="password를 입력해주세요." />
-    <button id="signin_button">로그인</button>
+    <div id="signin_container">
+        <input id="signin_email" placeholder="email을 입력해주세요." />
+        <input id="signin_password" type="password" placeholder="password를 입력해주세요." />
+        <button id="signin_button">로그인</button>
+    </div>
+    <button id="goto_signup">회원가입하기</button>
 </body>
 
 </html>
