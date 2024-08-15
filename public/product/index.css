@@ -117,7 +117,6 @@ header p {
   padding: 0px;
   gap: 20px;
 
-  max-width: 1250px;
   width: 100%;
 }
 
@@ -139,7 +138,8 @@ header p {
 }
 
 #product_wrapper div img:hover,
-#nav p:hover {
+#nav p:hover,
+header h1:hover {
   cursor: pointer;
 }
 

@@ -35,14 +35,16 @@ const renderProductList = async () => {
         </div>
         <div id="product_title">${v.title}</div>
         <div id="product_description">${v.description}</div>
-        <div id="product_price">가격: ${v.price}원</div>
+        <div id="product_price">가격: ${Number(
+          v.price
+        ).toLocaleString()}원</div>
         <div id="product_stock">재고수량: ${v.stock}(개)</div>
       </div>
     `;
     productListWrapper.append(itemElem);
     const goto = document.getElementById(`goto_detail${v.productId}`);
     goto.addEventListener("click", () => {
-      window.location.href = `http://localhost:8000/product/detail?id=${v.productId}`;
+      window.location.href = `/product/detail?id=${v.productId}`;
     });
   });
 };
@@ -50,9 +52,13 @@ const renderProductList = async () => {
 renderProductList();
 
 document.getElementById("mypage").addEventListener("click", () => {
-  window.location.href = "http://localhost:8000/mypage";
+  window.location.href = "/mypage";
 });
 
 document.getElementById("cart").addEventListener("click", () => {
-  window.location.href = "http://localhost:8000/cart";
+  window.location.href = "/cart";
+});
+
+document.getElementById("service_name").addEventListener("click", () => {
+  window.location.href = "/product";
 });
