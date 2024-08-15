@@ -1,5 +1,4 @@
 const { getProductList } = require("../service/product.service");
-
 const productController = require("express").Router();
 
 // 상품 조회 api
@@ -24,6 +23,7 @@ productController.get("/", async (req, res) => {
     });
   }
 });
+
 
 // 바깥에서 참조할 수 있게끔 해줌
 module.exports = productController;
