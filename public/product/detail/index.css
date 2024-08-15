@@ -1,0 +1,212 @@
+* {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+*:hover {
+  cursor: default;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  gap: 10px;
+
+  position: relative;
+
+  background-color: aliceblue;
+  height: 100%;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+header {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0px 15px 10px;
+
+  width: 100%;
+
+  background: #ffffff;
+  position: fixed;
+  border-bottom: 2px solid black;
+}
+
+header h1,
+header p {
+  margin: 0;
+}
+
+#sevice_name {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  /* Team3 */
+
+  font-size: 50px;
+  text-align: center;
+
+  color: #000000;
+}
+
+#nav {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  gap: 10px;
+}
+
+#nav p {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  font-size: 20px;
+  text-align: center;
+
+  color: #000000;
+  border-radius: 5px;
+}
+
+#nav p:hover,
+header h1:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
+}
+
+#product_detail {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  margin: 170px auto;
+  gap: 100px;
+
+  width: 650px;
+
+  background-color: white;
+}
+
+#img_container,
+#product_detail div img {
+  max-width: 300px;
+  width: 100%;
+}
+
+#product_info {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0px;
+  gap: 30px;
+
+  max-width: 280px;
+  width: 100%;
+}
+
+#product_title,
+#product_description,
+#product_price,
+#product_stock,
+#product_btn,
+#input {
+  padding: 0px 10px;
+}
+
+#input {
+  display: flex;
+  flex-direction: row;
+}
+
+#input p {
+  margin: 0;
+}
+
+#product_title {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  /* 상품 이름 */
+  font-size: 35px;
+
+  text-align: center;
+
+  color: #000000;
+}
+
+#quantity {
+  margin: 0px 10px;
+  background-color: #e6e6e6;
+}
+
+#product_btn {
+  /* Auto layout */
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 90%;
+}
+
+#put,
+#goto_order {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+
+  background-color: white;
+  border: 1px solid #006aff;
+  border-radius: 5px;
+
+  width: 100px;
+  font-size: 20px;
+  text-align: center;
+
+  color: #000000;
+}
+
+#put:hover,
+#goto_order:hover {
+  background-color: #e6e6e6;
+}

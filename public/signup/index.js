@@ -31,5 +31,5 @@ signupButton.addEventListener("click", async () => {
 });
 
 gotoSignin.addEventListener("click", () => {
-  window.location.href = "http://localhost:8000/signin";
+  window.location.href = "/signin";
 });
