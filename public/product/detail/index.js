@@ -4,11 +4,10 @@ window.addEventListener("load", async () => {
     // 특정 상품 id 추출
     const pathname = window.location.href;
     const id = pathname.split("detail/?id=")[1];
-    // console.log('id', id);
 
     try {
         // 백엔드로 상품 상세 데이터 요청
-        const verifyResult = await fetch(`/api/product?id=${id}`, {
+        const verifyResult = await fetch(`/api/product`, {
             method: "GET", // GET 요청
             headers: {
                 "Content-Type": "application/json",
@@ -23,8 +22,8 @@ window.addEventListener("load", async () => {
         // json 형식으로 데이터 저장
         const productData = await verifyResult.json();
         // 상품 데이터가 존재하는 경우 렌더링
-        console.log("productData.id: ", productData.id);
-        console.log("productData: ", productData.data[id].productId);
+        // console.log("productData.id: ", productData.id);
+        // console.log("productData: ", productData.data[id].productId);
         if (productData && productData.data[id].productId === parseInt(id)) { // id가 일치하는지 확인
             renderProductDetail(productData.data[id]);
         } else {

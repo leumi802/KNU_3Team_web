@@ -13,6 +13,7 @@ const dummyData = Array.from({ length: 30 }, (_, index) => {
     }
     return product;
 });
+
 */
 // 상품 조회 api
 // 1) 전체 싹다 뽑는다.
