@@ -35,7 +35,7 @@ const renderProductList = async () => {
         </div>
         <div id="product_title">${v.title}</div>
         <div id="product_description">${v.description}</div>
-        <div id="product_price">가격: ${v.price}원</div>
+        <div id="product_price">가격: ${v.price.toLocaleString()}원</div>
         <div id="product_stock">재고수량: ${v.stock}(개)</div>
       </div>
     `;
