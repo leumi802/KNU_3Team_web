@@ -80,13 +80,13 @@ const calculateTotalForProduct = async (productId, productList, orderInfo) => {
   try {
     const orderItem = orderInfo.find((item) => item.productId === productId);
     if (!orderItem) {
-      console.error(`${productId} not found in cart`);
+      console.error(`ProductId ${productId}가 카트에 없습니다.`);
       return 0;
     }
 
     const product = productList.find((v) => v.productId === productId);
     if (!product) {
-      console.error(`${productId} not found`);
+      console.error(`ProductId ${productId}를 찾을 수 없습니다.`);
       return 0;
     }
 
