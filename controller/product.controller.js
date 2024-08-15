@@ -1,7 +1,4 @@
 const { getProductList } = require("../service/product.service");
-
-const { getProductList } = require("../service/product.service");
-
 const productController = require("express").Router();
 /*
 const dummyData = Array.from({ length: 30 }, (_, index) => {

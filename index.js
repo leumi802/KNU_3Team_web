@@ -1,6 +1,6 @@
-const express = ("express");
+const express = require("express");
 const app = express();
-const apiController = ("./controller");
+const apiController = require("./controller");
 
 app.use(express.json());
 app.use(express.static("public"));
