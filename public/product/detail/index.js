@@ -38,6 +38,12 @@ window.addEventListener("load", async () => {
 
 // 상품 상세 정보 렌더링 함수
 function renderProductDetail(product) {
+  const idStock = {
+    id: product.productId,
+    stock: 3,
+  };
+  localStorage.setItem("id", JSON.stringify(idStock));
+
   const productListWrapper = document.getElementById("product-detail");
   const item = document.createElement("div");
   item.innerHTML = `
