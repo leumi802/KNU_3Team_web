@@ -31,7 +31,7 @@ const calculateTotal = async () => {
       }
     });
 
-    document.getElementById("total-price").textContent = total;
+    document.getElementById("total_price").textContent = total;
     return total;
   } catch (err) {
     console.error(err);
