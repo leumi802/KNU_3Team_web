@@ -2,7 +2,7 @@
 const fetchProductList = async () => {
   try {
     const response = await fetch("/api/product", {
-      method: "GET",
+      method: "get",
       headers: {
         "Content-Type": "application/json",
       },
@@ -13,17 +13,19 @@ const fetchProductList = async () => {
     }
 
     const data = await response.json();
-    return data.data || [];
+    return data.data;
   } catch (error) {
-    console.error(error.message);
+    console.error("Fetch 오류:", error);
     return [];
   }
 };
 
+// 상품 상세 페이지 로드 시
 window.addEventListener("load", async () => {
   const token = localStorage.getItem("token");
   // token이 가져와졌는지 체크
-  if (!token) {
+  if (token === null) {
+    // 오류 뜰 곳
     alert("(!)토큰이 존재하지 않음.");
     window.location.href = "/signin";
     return; // 페이지 이동 시 이후 코드 실행 방지
@@ -31,13 +33,18 @@ window.addEventListener("load", async () => {
 
   try {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const productList = await fetchProductList();
+    const productList = await fetchProductList(); // 상품 목록을 먼저 가져옵니다
 
     if (cart.length === 0) {
-      alert("장바구니에 상품이 없습니다.");
-      window.location.href = "/product";
-      return;
+      throw new Error("장바구니에 상품이 없습니다.");
     }
+
+    // 기존 상품 목록을 초기화
+    const cartPage = document.getElementById("cart_detail");
+    if (!cartPage) {
+      throw new Error("cart_detail 요소가 존재하지 않습니다.");
+    }
+    cartPage.innerHTML = "";
 
     // 장바구니의 각 상품을 렌더링
     cart.forEach(({ productId, quantity }) => {
@@ -45,26 +52,24 @@ window.addEventListener("load", async () => {
       if (product) {
         renderProductDetail(product, quantity);
       } else {
-        console.error(`(!)ProductId ${productId}가 없습니다.`);
+        console.error(`Product Id ${productId} not found in product list`);
       }
     });
 
-    await calculateTotal(); // 총합 계산
+    // 총합 계산
+    await calculateTotal();
   } catch (error) {
-    console.error(error.message);
+    console.error("Fetch 오류:", error.message);
   }
 });
 
 // 상품 상세 정보 렌더링 함수
 function renderProductDetail(product, quantity) {
   const cartPage = document.getElementById("cart_detail");
-  if (!cartPage) {
-    console.error("(!)cart_detail 요소가 존재하지 않습니다.");
-    return;
-  }
 
   const productDiv = document.createElement("div");
-  productDiv.classList.add("cart-item", `product-${product.productId}`);
+  productDiv.classList.add("cart-item");
+  productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
 
   productDiv.innerHTML = `
     <input type="checkbox" class="select-product" checked />
@@ -105,7 +110,7 @@ function renderProductDetail(product, quantity) {
 // 이벤트 리스너를 각 상품에 대해 추가
 function attachEventListeners(productId, stock) {
   const cartPage = document.getElementById("cart_detail");
-  const cartItem = cartPage.querySelector(`.product-${productId}`);
+  const cartItem = cartPage.querySelector(`.product-${productId}`); // productId를 사용하여 cartItem 찾기
 
   if (cartItem) {
     const minusBtn = cartItem.querySelector(".minus");
@@ -115,13 +120,7 @@ function attachEventListeners(productId, stock) {
 
     // 상품 수량 감소
     minusBtn.addEventListener("click", async () => {
-      const currentQuantity = getProductQuantity(productId);
-      if (currentQuantity <= 1) {
-        alert("(!)최소 1개 이상이어야 합니다.");
-        updateCartQuantity(productId, 1 - currentQuantity); // 1로 설정
-      } else {
-        updateCartQuantity(productId, -1);
-      }
+      updateCartQuantity(productId, -1);
       stockValueElement.textContent = `${getProductQuantity(productId)}개`;
       await calculateTotal(); // 수량 변경 후 총합 계산 및 업데이트
     });
@@ -134,7 +133,7 @@ function attachEventListeners(productId, stock) {
         stockValueElement.textContent = `${getProductQuantity(productId)}개`;
         await calculateTotal(); // 수량 변경 후 총합 계산 및 업데이트
       } else {
-        alert(`최대 ${stock}개까지 추가할 수 있습니다.`);
+        alert(`재고가 부족합니다. 최대 ${stock}개까지 추가할 수 있습니다.`);
       }
     });
 
@@ -145,7 +144,7 @@ function attachEventListeners(productId, stock) {
       await calculateTotal(); // 삭제 후 총합 계산 및 업데이트
     });
   } else {
-    console.error(`(!)ProductId ${productId}가 없습니다.`);
+    console.error(`Product Id ${productId} not found in cart items`);
   }
 }
 
@@ -157,31 +156,21 @@ function updateCartQuantity(productId, delta) {
   if (product) {
     product.quantity += delta;
     if (product.quantity <= 0) {
-      product.quantity = 1; // 수량을 1로 설정
-      alert("최소 1개 이상이어야 합니다.");
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    const stockValueElement = document.querySelector(
-      `.product-${productId} .stock-value`
-    );
-    if (stockValueElement) {
-      stockValueElement.textContent = `${product.quantity}개`;
+      removeProductFromCart(productId); // 장바구니에서 삭제
+      const cartItem = document.querySelector(`.product-${productId}`);
+      if (cartItem) {
+        cartItem.remove(); // 화면에서도 삭제
+      }
+    } else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      const stockValueElement = document.querySelector(
+        `.product-${productId} .stock-value`
+      );
+      if (stockValueElement) {
+        stockValueElement.textContent = `${product.quantity}개`;
+      }
     }
   }
-}
-
-// 장바구니에 상품 추가
-function addProductToCart(productId, quantity) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const existingProduct = cart.find((item) => item.productId === productId);
-
-  if (existingProduct) {
-    existingProduct.quantity = quantity;
-  } else {
-    cart.push({ productId, quantity });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 // 장바구니에서 상품 삭제
@@ -219,10 +208,13 @@ const calculateTotal = async () => {
     if (totalPriceElement) {
       totalPriceElement.textContent = `${Number(total).toLocaleString()}원`;
     } else {
-      console.error("가격을 표시할 요소가 없습니다.");
+      console.error("Total price element not found");
     }
+
+    return total;
   } catch (err) {
     console.error(err);
+    return 0;
   }
 };
 
@@ -268,15 +260,13 @@ if (checkoutButton) {
 
 // "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
 const buttonDiv = document.getElementById("button");
-if (buttonDiv) {
-  const continueShoppingButton = document.createElement("button");
-  continueShoppingButton.innerHTML = "쇼핑 계속하기";
+const continueShoppingButton = document.createElement("button");
+continueShoppingButton.innerHTML = "쇼핑 계속하기";
 
-  continueShoppingButton.addEventListener("click", () => {
-    alert("쇼핑을 계속합니다.");
-    window.location.href = "/product";
-  });
-}
+continueShoppingButton.addEventListener("click", () => {
+  alert("쇼핑을 계속합니다.");
+  window.location.href = "/product";
+});
 
 buttonDiv.appendChild(continueShoppingButton);
 
