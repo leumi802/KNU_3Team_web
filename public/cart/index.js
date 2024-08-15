@@ -199,7 +199,7 @@ const calculateTotal = async () => {
 };
 
 // "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
-const buttonDiv = document.getElementById("button");
+const shop_buttonDiv = document.getElementById("shopping_button");
 const addCartButton = document.createElement("button");
 addCartButton.innerHTML = "쇼핑 계속하기";
 
@@ -208,4 +208,16 @@ addCartButton.addEventListener("click", () => {
   window.location.href = "/product";
 });
 
-buttonDiv.appendChild(addCartButton);
+shop_buttonDiv.appendChild(addCartButton);
+
+// "결제하기" 버튼 추가 및 이벤트 리스너
+const pay_buttonDiv = document.getElementById("payment_button");
+const paymentButton = document.createElement("button");
+paymentButton.innerHTML = "결제하기";
+
+paymentButton.addEventListener("click", () => {
+  alert("결제창으로 이동합니다.");
+  window.location.href = "/order";
+});
+
+pay_buttonDiv.appendChild(paymentButton);
