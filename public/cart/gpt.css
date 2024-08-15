@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
 * {
   font-family: "Pretendard";
@@ -54,7 +54,8 @@ header {
   background: #ffffff;
   position: fixed;
   border-bottom: 2px solid black;
-  z-index: 1000; /* 헤더가 다른 요소 위에 보이도록 설정 */
+  z-index: 1000;
+  /* 헤더가 다른 요소 위에 보이도록 설정 */
 }
 
 header h1,
@@ -93,7 +94,8 @@ header p {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 74px; /* 헤더와 겹치지 않도록 여백 추가 */
+  margin-top: 74px;
+  /* 헤더와 겹치지 않도록 여백 추가 */
   width: 100%;
 }
 
