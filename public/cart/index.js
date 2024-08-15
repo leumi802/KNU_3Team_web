@@ -27,7 +27,7 @@ window.addEventListener("load", async () => {
   if (token === null) {
     // 오류 뜰 곳
     alert("(!)토큰이 존재하지 않음.");
-    window.location.href = "http://localhost:8000/signin";
+    window.location.href = "/signin";
     return; // 페이지 이동 시 이후 코드 실행 방지
   }
 
@@ -72,16 +72,19 @@ function renderProductDetail(product, quantity) {
   productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
 
   productDiv.innerHTML = `
-    <div class="product-title">상품명: ${product.title}</div>
-    <div class="product-price">가격: ${product.price}원</div>
-    <div class="product-image">
-      <img src="${product.imgUrl}" data-product-id="${product.productId}" />
-    </div>
     <input type="checkbox" class="select-product" checked />
-    <input type="button" class="minus" value="-" />
-    <span class="stock-value">${quantity}개</span>
-    <input type="button" class="plus" value="+" />
-    <button class="cart-delete">삭제</button>
+    <div class="product-image">
+        <img src="${product.imgUrl}" data-product-id="${product.productId}" />
+    </div>
+    <div id="product">
+      <div class="product_title">상품명: ${product.title}</div>
+      <div class="product_price">가격: ${Number(
+        product.price
+      ).toLocaleString()}원</div>
+      <input type="button" class="minus" value="-" />
+      <span class="stock-value">${quantity}개</span>
+      <input type="button" class="plus" value="+" />
+    <button class="cart-delete">삭제</button></div>
   `;
 
   cartPage.appendChild(productDiv);
@@ -91,7 +94,7 @@ function renderProductDetail(product, quantity) {
   const productImage = productDiv.querySelector(".product-image img");
   if (productImage) {
     productImage.addEventListener("click", () => {
-      window.location.href = `http://localhost:8000/product/detail?id=${product.productId}`;
+      window.location.href = `/product/detail?id=${product.productId}`;
     });
   }
 
@@ -203,7 +206,7 @@ const calculateTotal = async () => {
 
     const totalPriceElement = document.getElementById("total_price");
     if (totalPriceElement) {
-      totalPriceElement.textContent = `${total}원`;
+      totalPriceElement.textContent = `${Number(total).toLocaleString()}원`;
     } else {
       console.error("Total price element not found");
     }
@@ -226,3 +229,15 @@ continueShoppingButton.addEventListener("click", () => {
 });
 
 buttonDiv.appendChild(continueShoppingButton);
+
+document.getElementById("mypage").addEventListener("click", () => {
+  window.location.href = "/mypage";
+});
+
+document.getElementById("cart").addEventListener("click", () => {
+  window.location.href = "/cart";
+});
+
+document.getElementById("service_name").addEventListener("click", () => {
+  window.location.href = "/product";
+});
