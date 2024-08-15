@@ -1,0 +1,165 @@
+* {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+*:hover {
+  cursor: default;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  gap: 10px;
+
+  position: relative;
+
+  background-color: aliceblue;
+  height: 100%;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+header {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0px 15px 10px;
+
+  width: 100%;
+
+  background: #ffffff;
+  position: fixed;
+  border-bottom: 2px solid black;
+}
+
+header h1,
+header p {
+  margin: 0;
+}
+
+#sevice_name {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  /* Team3 */
+
+  font-size: 50px;
+  text-align: center;
+
+  color: #000000;
+}
+
+#nav {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  gap: 10px;
+}
+
+#nav p {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  /* 마이페이지 */
+
+  font-size: 20px;
+  text-align: center;
+
+  color: #000000;
+  border-radius: 5px;
+}
+
+#nav p:hover {
+  background-color: #e6e6e6;
+}
+
+#cart_detail {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  margin-top: 74px;
+  padding: 0px;
+  gap: 20px;
+
+  width: 100%;
+}
+
+#product_wrapper {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 0px 10px;
+  gap: 11px;
+
+  width: 280px;
+  background: #ffffff;
+}
+
+#product_wrapper div,
+#product_wrapper div img {
+  width: 100%;
+}
+
+#product_wrapper div img:hover,
+#nav p:hover,
+header h1:hover {
+  cursor: pointer;
+}
+
+.product_title,
+.product_description,
+.product_price,
+.product_stock {
+  padding: 0px 10px;
+}
+
+.product_title {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  /* 상품 이름 */
+  font-size: 35px;
+
+  text-align: center;
+
+  color: #000000;
+}
