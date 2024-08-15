@@ -89,7 +89,7 @@ function renderProductDetail(product) {
                 // 이미 장바구니에 있는 상품의 경우 수량 업데이트
 
 
-                if (cart[existingItemIndex].quantity + 1 <= product.stock) {
+                if (cart[existingItemIndex].quantity + quantity <= product.stock) {
                     cart[existingItemIndex].quantity += quantity;
                     // 조건 통과시 장바구니에 담기
                     alert("장바구니에 담겼습니다.");

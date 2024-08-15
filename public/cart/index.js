@@ -208,4 +208,14 @@ addCartButton.addEventListener("click", () => {
     window.location.href = "/product";
 });
 
+const toOrder = document.getElementById("order");
+const addToOder = document.createElement("order");
+addToOder.innerHTML = "결제하기";
+
+addToOder.addEventListener("click", () => {
+    alert("결제 페이지로 넘어갑니다.");
+    window.location.href = "/order";
+});
+
 buttonDiv.appendChild(addCartButton);
+toOrder.appendChild(addToOder);
