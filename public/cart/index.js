@@ -2,7 +2,7 @@
 const fetchProductList = async () => {
   try {
     const response = await fetch("/api/product", {
-      method: "get",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
@@ -13,7 +13,7 @@ const fetchProductList = async () => {
     }
 
     const data = await response.json();
-    return data.data;
+    return data.data || [];
   } catch (error) {
     console.error(error.message);
     return [];
@@ -23,14 +23,10 @@ const fetchProductList = async () => {
 window.addEventListener("load", async () => {
   const token = localStorage.getItem("token");
   // token이 가져와졌는지 체크
-  if (token === null) {
+  if (!token) {
     alert("(!)토큰이 존재하지 않음.");
     window.location.href = "/signin";
-<<<<<<< HEAD
-    return;
-=======
     return; // 페이지 이동 시 이후 코드 실행 방지
->>>>>>> 497c4a1b0f5cdf3f4575d4b69bfc5b7ef3d14b8f
   }
 
   try {
@@ -38,7 +34,9 @@ window.addEventListener("load", async () => {
     const productList = await fetchProductList();
 
     if (cart.length === 0) {
-      throw new Error("장바구니에 상품이 없습니다.");
+      alert("장바구니에 상품이 없습니다.");
+      window.location.href = "/product";
+      return;
     }
 
     // 장바구니의 각 상품을 렌더링
@@ -51,7 +49,7 @@ window.addEventListener("load", async () => {
       }
     });
 
-    await calculateTotal(); //총합 계산
+    await calculateTotal(); // 총합 계산
   } catch (error) {
     console.error(error.message);
   }
@@ -61,7 +59,8 @@ window.addEventListener("load", async () => {
 function renderProductDetail(product, quantity) {
   const cartPage = document.getElementById("cart_detail");
   if (!cartPage) {
-    throw new Error("(!)cart_detail 요소가 존재하지 않습니다.");
+    console.error("(!)cart_detail 요소가 존재하지 않습니다.");
+    return;
   }
 
   const productDiv = document.createElement("div");
@@ -156,7 +155,7 @@ function updateCartQuantity(productId, delta) {
     product.quantity += delta;
     if (product.quantity <= 0) {
       product.quantity = 1; // 수량을 1로 설정
-      alert("(1)최소 1개 이상이어야 합니다.");
+      alert("최소 1개 이상이어야 합니다.");
     }
     localStorage.setItem("cart", JSON.stringify(cart));
     const stockValueElement = document.querySelector(
@@ -215,13 +214,12 @@ const calculateTotal = async () => {
 
     const totalPriceElement = document.getElementById("total_price");
     if (totalPriceElement) {
-      totalPriceElement.textContent = `${total.toLocaleString()}원`;
+      totalPriceElement.textContent = `총 합계 : ${total.toLocaleString()}원`;
     } else {
       console.error("가격을 표시할 요소가 없습니다.");
     }
   } catch (err) {
     console.error(err);
-    return 0;
   }
 };
 
@@ -267,12 +265,16 @@ if (checkoutButton) {
 
 // "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
 const buttonDiv = document.getElementById("button");
-const continueShoppingButton = document.createElement("button");
-continueShoppingButton.innerHTML = "쇼핑 계속하기";
+if (buttonDiv) {
+  const continueShoppingButton = document.createElement("button");
+  continueShoppingButton.innerHTML = "쇼핑 계속하기";
 
-continueShoppingButton.addEventListener("click", () => {
-  alert("쇼핑을 계속합니다.");
-  window.location.href = "/product";
-});
+  continueShoppingButton.addEventListener("click", () => {
+    alert("쇼핑을 계속합니다.");
+    window.location.href = "/product";
+  });
 
-buttonDiv.appendChild(continueShoppingButton);
+  buttonDiv.appendChild(continueShoppingButton);
+} else {
+  console.error("버튼을 추가할 div 요소가 없습니다.");
+}
