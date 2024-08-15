@@ -274,8 +274,6 @@ continueShoppingButton.addEventListener("click", () => {
     window.location.href = "/product";
 });
 
-buttonDiv.appendChild(addCartButton);
-
 buttonDiv.appendChild(continueShoppingButton);
 
 document.getElementById("mypage").addEventListener("click", () => {
