@@ -62,7 +62,22 @@ window.addEventListener("load", async () => {
   try {
     const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
     const productList = await fetchProductList();
-
+    const Result = await fetch("/api/user/mypage", {
+      method: "post",
+      body: JSON.stringify({ token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (Result.ok) {
+      const data = await Result.json();
+      setContent(data);
+      return data;
+    } else {
+      alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
+      localStorage.removeItem("token"); // 현재 토큰 제거
+      window.location.href = "http://localhost:8000/signin";
+    }
     if (orderInfo.length === 0) {
       alert("결제할 상품이 없습니다.");
       window.location.href = "/cart";
@@ -85,7 +100,8 @@ window.addEventListener("load", async () => {
 
     await calculateTotal(); // 총합 계산
   } catch (error) {
-    console.error(error.message);
+    console.error("Fetch 오류:", error);
+    return [];
   }
 });
 
@@ -98,7 +114,7 @@ const setContent = (data) => {
   const getname = document.getElementById("getname");
   const getadress = document.getElementById("getadress");
   const getphone = document.getElementById("getphone");
-  const products = JSON.parse(localStorage.getItem("cart")) || [];
+  const products = JSON.parse(localStorage.getItem("orderInfo")) || [];
 
   const payButton = document.getElementById("order");
 
