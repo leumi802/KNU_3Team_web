@@ -63,7 +63,6 @@ window.addEventListener("load", async () => {
 function renderProductDetail(product, quantity) {
   const cartPage = document.getElementById("cart_detail");
 
-  // Create elements for product details
   const productDiv = document.createElement("div");
   productDiv.classList.add("cart-item");
   productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
@@ -82,10 +81,8 @@ function renderProductDetail(product, quantity) {
 
   cartPage.appendChild(productDiv);
 
-  // Attach event listeners for each button
   attachEventListeners(product.productId, product.stock);
 
-  // Attach event listener to image
   const productImage = productDiv.querySelector(".product-image img");
   if (productImage) {
     productImage.addEventListener("click", () => {
@@ -190,7 +187,6 @@ const calculateTotal = async () => {
       }
     });
 
-    // Update total price display if needed
     const totalPriceElement = document.getElementById("total_price");
     if (totalPriceElement) {
       totalPriceElement.textContent = `${total}원`;
