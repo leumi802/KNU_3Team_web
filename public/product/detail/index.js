@@ -38,10 +38,11 @@ window.addEventListener("load", async () => {
 
 // 상품 상세 정보 렌더링 함수
 function renderProductDetail(product) {
-  const idStock = {
-    id: product.productId,
-    stock: 3,
-  };
+  const idStock = [
+    { productId: 0, quantity: 1 },
+    { productId: 13, quantity: 5 },
+    { productId: 3, quantity: 7 },
+  ];
   localStorage.setItem("cart", JSON.stringify(idStock));
 
   const productListWrapper = document.getElementById("product-detail");
