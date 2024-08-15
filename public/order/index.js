@@ -30,14 +30,6 @@ window.addEventListener("load", async () => {
   }
 });
 
-const cartItem = localStorage.getItem("cart");
-console.log(cartItem);
-/**
- * order.schema.js를 만들어줘야 하는데
- * 결제하는 사용자의 고유 ID :=> 즉, buyerID를 만들어주고 실제 몽고DB에 있는 ObjectId를 넣어주면 됨.
- * --> 주문자 식별 ID가 buyerID임
- * 주문 내역 정보를 출력하려면
- */
 // 구매자의 ID를 가져오는 함수 정의
 const setContent = (data) => {
   const postid = data.email; // data.email을 여기서 사용
@@ -52,20 +44,32 @@ const setContent = (data) => {
   const payButton = document.getElementById("order");
 
   payButton.addEventListener("click", () => {
-    if (postid == "") {
-      alert("다시");
+    if (!postname.value) {
+      alert("구매자 정보를 입력해주세요.");
+    } else if (!postemail.value || !postemail.value.includes("@")) {
+      alert("구매자 이메일을 바르게 입력해주세요.");
+    } else if (!postphone.value) {
+      alert("구매자의 전화번호를 입력해주세요.");
+    } else if (!getname.value) {
+      alert("받는사람의 이름을 입력해주세요.");
+    } else if (!getadress.value) {
+      alert("주소를 입력해주세요.");
+    } else if (!getphone.value) {
+      alert("받는사람의 전화번호를 입력해주세요.");
+    } else {
+      alert("성공");
+      const user = {
+        buyerId: postid,
+        buyerName: postname.value,
+        buyerEmail: postemail.value,
+        buyerPhoneNum: postphone.value,
+        recipientName: getname.value,
+        recipientAddress: getadress.value,
+        recipientPhoneNum: getphone.value,
+        products: products,
+      };
+      // 대충 여기서 fetch활용해서 method:"post", body:JSON({user}), headers: 뭐였지
+      // 해주면 될듯 함
     }
-    const user = {
-      buyerId: postid,
-      buyerName: postname.value,
-      buyerEmail: postemail.value,
-      buyerPhoneNum: postphone.value,
-      recipientName: getname.value,
-      recipientAddress: getadress.value,
-      recipientPhoneNum: getphone.value,
-      products: products,
-    };
-    // 대충 여기서 fetch활용해서 method:"post", body:JSON({user}), headers: 뭐였지
-    // 해주면 될듯 함
   });
 };
