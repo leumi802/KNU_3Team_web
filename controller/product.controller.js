@@ -31,7 +31,7 @@ productController.post("/", async (req, res) => {
   // 상품 전체 조회
   try {
     const productList = await getProductListById(productId);
-    console.log("productController.post: productList:", productList);
+    // console.log("productController.post: productList:", productList);
     return res.status(200).json({
       result: true,
       data: productList,
