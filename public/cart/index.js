@@ -22,6 +22,15 @@ const fetchProductList = async () => {
 
 // 상품 상세 페이지 로드 시
 window.addEventListener("load", async () => {
+  const token = localStorage.getItem("token");
+  // token이 가져와졌는지 체크
+  if (token === null) {
+    // 오류 뜰 곳
+    alert("(!)토큰이 존재하지 않음.");
+    window.location.href = "http://localhost:8000/signin";
+    return; // 페이지 이동 시 이후 코드 실행 방지
+  }
+
   try {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const productList = await fetchProductList(); // 상품 목록을 먼저 가져옵니다

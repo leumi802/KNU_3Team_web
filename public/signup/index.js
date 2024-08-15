@@ -2,6 +2,7 @@ const signupEmail = document.getElementById("signup_email");
 const signupPassword = document.getElementById("signup_password");
 const signupNickname = document.getElementById("signup_nickname");
 const signupButton = document.getElementById("signup_button");
+const gotoSignin = document.getElementById("goto_signin");
 
 signupButton.addEventListener("click", async () => {
   const user = {
@@ -27,4 +28,8 @@ signupButton.addEventListener("click", async () => {
   } catch (err) {
     console.error(err);
   }
+});
+
+gotoSignin.addEventListener("click", () => {
+  window.location.href = "http://localhost:8000/signin";
 });

@@ -41,13 +41,13 @@ function renderProductDetail(product) {
   const productListWrapper = document.getElementById("product-detail");
   const item = document.createElement("div");
   item.innerHTML = `
-        <div> ${product.title}</div>
-            <div>가격: ${product.price}원</div>
-            <div>[상세설명] ${product.description}</div>
-            <div>
-                <img src="${product.imgUrl}" />
-            </div>
-            <div>재고수량: ${product.stock}(개)</div>
+     <div>
+        <img src="${product.imgUrl}" />
+    </div>
+    <div id="product_title"> ${product.title}</div>
+    <div id="product_description">${product.description}</div>
+    <div id="product_price">가격: ${product.price}원</div>
+    <div id="product_stock">재고수량: ${product.stock}(개)</div>
     `;
 
   // 수량 입력 필드 추가

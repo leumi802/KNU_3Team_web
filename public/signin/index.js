@@ -1,6 +1,7 @@
 const signinEmail = document.getElementById("signin_email");
 const signinPassword = document.getElementById("signin_password");
 const signinButton = document.getElementById("signin_button");
+const gotoSignup = document.getElementById("goto_signup");
 
 signinButton.addEventListener("click", async () => {
   const email = signinEmail.value;
@@ -17,14 +18,17 @@ signinButton.addEventListener("click", async () => {
     if (signinResult.ok) {
       const result = await signinResult.json();
       console.log("로그인 성공", result);
-      alert("로그인 되었습니다.");
-      window.location.href = "/product";
       localStorage.setItem("token", result.token);
+      window.location.href = "http://localhost:8000/product";
     } else {
-      alert("로그인 실패");
+      alert("(!)로그인 실패");
     }
   } catch (err) {
     console.log(err);
     alert("(!)로그인 오류");
   }
+});
+
+gotoSignup.addEventListener("click", () => {
+  window.location.href = "http://localhost:8000/signup";
 });
