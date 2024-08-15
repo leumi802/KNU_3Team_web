@@ -20,39 +20,8 @@ const fetchProductList = async () => {
 };
 
 window.addEventListener("load", async () => {
-  // localStorage에 있는 token을 꺼내서 (localStorage.getItem("token");
   const token = localStorage.getItem("token");
-  // token이 가져와졌는지 체크
-  if (token === null) {
-    // 오류 뜰 곳
-    alert("(!)토큰이 존재하지 않음.");
-  }
-  try {
-    const Result = await fetch("/api/user/mypage", {
-      method: "post",
-      body: JSON.stringify({ token }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (Result.ok) {
-      const data = await Result.json();
-      setContent(data);
-      return data;
-    } else {
-      alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-      localStorage.removeItem("token"); // 현재 토큰 제거
-      window.location.href = "http://localhost:8000/signin";
-    }
-  } catch (error) {
-    console.error("Fetch 오류:", error);
-    return [];
-  }
-});
-
-window.addEventListener("load", async () => {
-  const token = localStorage.getItem("token");
   if (!token) {
     alert("(!)토큰이 존재하지 않음.");
     window.location.href = "/signin";
@@ -60,30 +29,37 @@ window.addEventListener("load", async () => {
   }
 
   try {
-    const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
-    const productList = await fetchProductList();
-    const Result = await fetch("/api/user/mypage", {
-      method: "post",
+    // 사용자 정보 가져오기
+    const userResponse = await fetch("/api/user/mypage", {
+      method: "POST",
       body: JSON.stringify({ token }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if (Result.ok) {
-      const data = await Result.json();
-      setContent(data);
-      return data;
-    } else {
+
+    if (!userResponse.ok) {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-      localStorage.removeItem("token"); // 현재 토큰 제거
+      localStorage.removeItem("token");
       window.location.href = "http://localhost:8000/signin";
+      return;
     }
+
+    const userData = await userResponse.json();
+    setContent(userData);
+
+    // 상품 목록과 주문 정보 가져오기
+    const productList = await fetchProductList();
+    console.log("Fetched product list:", productList); // 확인을 위한 로그
+    const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
+
     if (orderInfo.length === 0) {
       alert("결제할 상품이 없습니다.");
       window.location.href = "/cart";
-      throw new Error("결제할 상품이 없습니다.");
+      return;
     }
 
+    // 상품 상세 정보 렌더링
     for (const { productId, quantity } of orderInfo) {
       const product = productList.find((item) => item.productId === productId);
       if (product) {
@@ -98,10 +74,10 @@ window.addEventListener("load", async () => {
       }
     }
 
-    await calculateTotal(); // 총합 계산
+    // 총합 계산
+    await calculateTotal();
   } catch (error) {
     console.error("Fetch 오류:", error);
-    return [];
   }
 });
 
@@ -142,21 +118,21 @@ const setContent = (data) => {
         recipientPhoneNum: getphone.value,
         products: products,
       };
-      // fetch를 사용하여 POST 요청 보내기
-      const Result = await fetch("/api/order/", {
-        method: "POST", // 메서드는 대문자로 작성
-        body: JSON.stringify(user), // user 객체를 JSON 문자열로 변환
+
+      // POST 요청 보내기
+      const result = await fetch("/api/order/", {
+        method: "POST",
+        body: JSON.stringify(user),
         headers: {
-          "Content-Type": "application/json", // 요청의 콘텐츠 타입 설정
+          "Content-Type": "application/json",
         },
       });
 
-      // 응답 처리
-      if (Result.ok) {
-        const data = await Result.json();
-        console.log(data); // 서버로부터 받은 데이터 처리
+      if (result.ok) {
+        const data = await result.json();
+        console.log(data);
       } else {
-        console.error("서버 오류:", Result.status); // 오류 처리
+        console.error("서버 오류:", result.status);
       }
       alert("결제 되었습니다.");
     }
@@ -172,10 +148,10 @@ function renderProductDetail(product, quantity, total) {
   const productDiv = document.createElement("div");
 
   productDiv.innerHTML = `
-        <div class="product-title">상품명: ${product.title}</div>
-        <div class="product-price">가격: ${product.price.toLocaleString()}원</div>
-        <span class="stock-value">${quantity}개</span>
-      `;
+    <div class="product-title">상품명: ${product.title}</div>
+    <div class="product-price">가격: ${product.price.toLocaleString()}원</div>
+    <span class="stock-value">${quantity}개</span>
+  `;
   orderProduct.appendChild(productDiv);
 }
 
@@ -221,6 +197,5 @@ const calculateTotal = async () => {
     }
   } catch (err) {
     console.error(err);
-    return 0;
   }
 };
