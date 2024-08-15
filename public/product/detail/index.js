@@ -42,7 +42,7 @@ function renderProductDetail(product) {
     id: product.productId,
     stock: 3,
   };
-  localStorage.setItem("id", JSON.stringify(idStock));
+  localStorage.setItem("cart", JSON.stringify(idStock));
 
   const productListWrapper = document.getElementById("product-detail");
   const item = document.createElement("div");

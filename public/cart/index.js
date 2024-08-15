@@ -1,8 +1,7 @@
 // id를 받아와서 해당 id의 상세정보 출력
 // 상품 상세 페이지 렌더링
 // id 받아오기
-const cartitem = localStorage.getItem("id");
-const cart = JSON.parse(cartitem);
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
 const cartid = parseInt(cart.id); //해당 상품 id
 
 window.addEventListener("load", async () => {
@@ -22,10 +21,10 @@ window.addEventListener("load", async () => {
 
     // json 형식으로 데이터 저장
     const productData = await verifyResult.json();
-
+    console.log(productData.data[0]);
     // 상품 데이터가 존재하는 경우 렌더링
     const proList = productData.data[cartid];
-    console.log(proList);
+
     if (proList && proList.productId === parseInt(cartid)) {
       renderProductDetail(proList, cart.stock);
       pluscount();
@@ -43,12 +42,11 @@ window.addEventListener("load", async () => {
 
 // 상품 상세 정보 렌더링 함수
 function renderProductDetail(product, count) {
-  const counted = localStorage.getItem("id");
-  const ct = JSON.parse(counted);
+  const ct = JSON.parse(localStorage.getItem("cart")) || [];
 
   const cartpage = document.getElementById("cart_detail");
   cartpage.innerHTML = `
-    <div id="title">상품명: ${product.title}</div>
+    <div id="goto_detail${product.productId}">상품명: ${product.title}</div>
     <div>가격: ${product.price}원</div>
     <div><img src="${product.imgUrl}" /></div>
     <input type="button" id="minus" value="-"/>
@@ -60,19 +58,39 @@ function renderProductDetail(product, count) {
 }
 
 function titleclick() {
-  const title = document.getElementById("title");
-  title.addEventListener("click", () => {
-    console.log("짠");
-    window.location.href = `http://localhost:8000/product/detail?id=${cartid}`;
-  });
+  const title = document.getElementById(`goto_detail${cartid}`);
+  console.log(cart);
+  if (title) {
+    title.addEventListener("click", () => {
+      window.location.href = `http://localhost:8000/product/detail?id=${cartid}`;
+    });
+  } else {
+    console.error(`Product Id ${productId} not found`);
+  }
 }
+// 상품 상세 페이지 이동 함수
+const moveProductDetail = () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.forEach(({ productId }) => {
+    const goToProduct = document.getElementById(`goto_detail${productId}`);
+
+    if (goToProduct) {
+      goToProduct.addEventListener("click", () => {
+        window.location.href = `http://localhost:8000/product/detail?id=${productId}`;
+      });
+    } else {
+      console.error(`Product Id ${productId} not found`);
+    }
+  });
+};
 
 function deleteCart() {
   const deleteCart = document.getElementById("cart_delete");
   deleteCart.addEventListener("click", () => {
     const cartpage = document.getElementById("cart_detail");
     cartpage.innerHTML = "";
-    localStorage.removeItem("id");
+    localStorage.removeItem("cart");
     alert("해당 물품이 삭제되었습니다.");
   });
 }
@@ -82,11 +100,10 @@ function minuscount() {
   const stockValueElement = document.getElementById("stock-value");
 
   minuscnt.addEventListener("click", () => {
-    const minusitem = localStorage.getItem("id");
-    const minusdata = JSON.parse(minusitem);
+    const minusdata = JSON.parse(localStorage.getItem("cart")) || [];
     localStorage.setItem(
-      "id",
-      JSON.stringify({ id: minusdata.id, stock: --minusdata.stock })
+      "cart",
+      JSON.stringify({ cart: minusdata.id, stock: --minusdata.stock })
     );
     stockValueElement.textContent = minusdata.stock + "개";
   });
@@ -96,11 +113,10 @@ function pluscount() {
   const stockValueElement = document.getElementById("stock-value");
 
   pluscnt.addEventListener("click", () => {
-    const plusitem = localStorage.getItem("id");
-    const plusdata = JSON.parse(plusitem);
+    const plusdata = JSON.parse(localStorage.getItem("cart")) || [];
     localStorage.setItem(
-      "id",
-      JSON.stringify({ id: plusdata.id, stock: ++plusdata.stock })
+      "cart",
+      JSON.stringify({ cart: plusdata.id, stock: ++plusdata.stock })
     );
     stockValueElement.textContent = plusdata.stock + "개";
   });
