@@ -116,7 +116,6 @@ const setContent = (data) => {
     } else if (!getphone.value) {
       alert("받는사람의 전화번호를 입력해주세요.");
     } else {
-      alert("성공");
       const user = {
         buyerId: postid,
         buyerName: postname.value,
@@ -143,6 +142,7 @@ const setContent = (data) => {
       } else {
         console.error("서버 오류:", Result.status); // 오류 처리
       }
+      alert("결제 되었습니다.");
     }
   });
 };

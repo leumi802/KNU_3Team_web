@@ -211,17 +211,13 @@ const calculateTotal = async () => {
   }
 };
 
-// "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
-const shop_buttonDiv = document.getElementById("shopping_button");
-const addCartButton = document.createElement("button");
-addCartButton.innerHTML = "쇼핑 계속하기";
+// "결제하기" 버튼 추가 및 이벤트 리스너
+const pay_buttonDiv = document.getElementById("pay_button");
 
-addCartButton.addEventListener("click", () => {
-  alert("쇼핑을 계속합니다.");
-  window.location.href = "/product";
+pay_buttonDiv.addEventListener("click", () => {
+  alert("결제창으로 이동합니다.");
+  window.location.href = "/order";
 });
-
-buttonDiv.appendChild(continueShoppingButton);
 
 document.getElementById("mypage").addEventListener("click", () => {
   window.location.href = "/mypage";
