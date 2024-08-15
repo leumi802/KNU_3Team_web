@@ -24,7 +24,7 @@ window.addEventListener("load", async () => {
 
     // 상품 데이터가 존재하는 경우 렌더링
     const proList = productData.data[id];
-    console.log(proList);
+    // console.log(proList);
     if (productData && proList.productId === parseInt(id)) {
       renderProductDetail(proList);
     } else {
@@ -41,14 +41,14 @@ function renderProductDetail(product) {
   const productListWrapper = document.getElementById("product-detail");
   const item = document.createElement("div");
   item.innerHTML = `
-            <div>${product.title}</div>
+        <div> ${product.title}</div>
             <div>가격: ${product.price}원</div>
             <div>[상세설명] ${product.description}</div>
             <div>
                 <img src="${product.imgUrl}" />
             </div>
             <div>재고수량: ${product.stock}(개)</div>
-        `;
+    `;
 
   // 수량 입력 필드 추가
   // input은 1 ~ 재고까지밖에 수정하지 못함
@@ -63,15 +63,12 @@ function renderProductDetail(product) {
   addCartButton.innerHTML = "장바구니";
   addCartButton.addEventListener("click", () => {
     const quantity = parseInt(quantityInput.value); // 입력된 수량 가져오기
-
     if (quantity > product.stock) {
       alert("재고 수량보다 많은 수량을 선택할 수 없습니다.");
       return;
     } else if (quantity < 1) {
-      alert("1개 미만의 제품을 담을 수 없습니다.");
+      alert("1개 미만의 재품을 담을 수 없습니다.");
     } else {
-      alert("장바구니에 담겼습니다.");
-
       // localStorage에 저장할 객체 생성
       const cartItem = {
         productId: product.productId,
@@ -90,10 +87,23 @@ function renderProductDetail(product) {
       );
       if (existingItemIndex > -1) {
         // 이미 장바구니에 있는 상품의 경우 수량 업데이트
-        cart[existingItemIndex].quantity = quantity;
+
+        if (cart[existingItemIndex].quantity + 1 <= product.stock) {
+          cart[existingItemIndex].quantity += quantity;
+          // 조건 통과시 장바구니에 담기
+          alert("장바구니에 담겼습니다.");
+        } else {
+          alert("재고가 부족합니다.");
+        }
+
+        //if (cart[existingItemIndex].quantity <= prooduct.stock){
+        //   cart[existingItemIndex].quantity += quantity;
+        //}
       } else {
         // 장바구니에 없는 상품인 경우 새로 추가
         cart.push(cartItem);
+        // 조건 통과시 장바구니에 담기
+        alert("장바구니에 담겼습니다.");
       }
 
       // 업데이트된 장바구니를 localStorage에 저장
@@ -101,7 +111,6 @@ function renderProductDetail(product) {
     }
   });
 
-  // 결제 버튼
   const payButton = document.createElement("button");
   payButton.innerHTML = "결제하기";
   payButton.addEventListener("click", async () => {

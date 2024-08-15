@@ -22,13 +22,6 @@ const fetchProductList = async () => {
 
 // 상품 상세 페이지 로드 시
 window.addEventListener("load", async () => {
-  const token = localStorage.getItem("token");
-  // token이 가져와졌는지 체크
-  if (token === null) {
-    // 오류 뜰 곳
-    alert("(!)토큰이 존재하지 않음.");
-    window.location.href = "http://localhost:8000/signin";
-  }
   try {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const productList = await fetchProductList(); // 상품 목록을 먼저 가져옵니다
@@ -69,7 +62,6 @@ function renderProductDetail(product, quantity) {
   productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
 
   productDiv.innerHTML = `
-      <input type="checkbox" id="checklist"/>
       <div class="product-title">상품명: ${product.title}</div>
       <div class="product-price">가격: ${product.price}원</div>
       <div class="product-image">
