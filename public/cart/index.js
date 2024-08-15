@@ -218,6 +218,46 @@ const calculateTotal = async () => {
   }
 };
 
+// 체크된 상품 정보를 localStorage에 저장하는 함수
+const saveOrderInfo = async () => {
+  try {
+    const productList = await fetchProductList();
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const orderInfo = cart
+      .map(({ productId, quantity }) => {
+        const product = productList.find((v) => v.productId === productId);
+        const isSelected = document.querySelector(
+          `.product-${productId} .select-product`
+        )?.checked;
+
+        if (product && isSelected) {
+          return {
+            productId: product.productId,
+            quantity: quantity, // 장바구니에서의 수량
+          };
+        }
+        return null;
+      })
+      .filter((item) => item !== null); // null 값 제거
+
+    localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 결제하기 버튼 추가 및 이벤트 리스너 설정
+const checkoutButton = document.getElementById("pay_button");
+if (checkoutButton) {
+  checkoutButton.addEventListener("click", async () => {
+    await saveOrderInfo(); // 체크된 상품 정보를 localStorage에 저장
+    window.location.href = "/order"; // 결제 페이지로 이동
+  });
+} else {
+  console.error("결제하기 버튼이 없습니다.");
+}
+
 // "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
 const buttonDiv = document.getElementById("button");
 const continueShoppingButton = document.createElement("button");
