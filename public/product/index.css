@@ -5,3 +5,36 @@
 .product div {
   text-align: center;
 }
+
+* {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  margin: 0;
+  gap: 10px;
+
+  position: relative;
+
+  background: #ffffff;
+
+  height: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
