@@ -51,43 +51,43 @@ window.addEventListener("load", async () => {
   }
 });
 
-// window.addEventListener("load", async () => {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     alert("(!)토큰이 존재하지 않음.");
-//     window.location.href = "/signin";
-//     return;
-//   }
+window.addEventListener("load", async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("(!)토큰이 존재하지 않음.");
+    window.location.href = "/signin";
+    return;
+  }
 
-//   try {
-//     const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
-//     const productList = await fetchProductList();
+  try {
+    const orderInfo = JSON.parse(localStorage.getItem("orderInfo")) || [];
+    const productList = await fetchProductList();
 
-//     if (orderInfo.length === 0) {
-//       alert("결제할 상품이 없습니다.");
-//       window.location.href = "/cart";
-//       throw new Error("결제할 상품이 없습니다.");
-//     }
+    if (orderInfo.length === 0) {
+      alert("결제할 상품이 없습니다.");
+      window.location.href = "/cart";
+      throw new Error("결제할 상품이 없습니다.");
+    }
 
-//     for (const { productId, quantity } of orderInfo) {
-//       const product = productList.find((item) => item.productId === productId);
-//       if (product) {
-//         const total = await calculateTotalForProduct(
-//           productId,
-//           productList,
-//           orderInfo
-//         );
-//         renderProductDetail(product, quantity, total);
-//       } else {
-//         console.error(`(!)ProductId ${productId}가 없습니다.`);
-//       }
-//     }
+    for (const { productId, quantity } of orderInfo) {
+      const product = productList.find((item) => item.productId === productId);
+      if (product) {
+        const total = await calculateTotalForProduct(
+          productId,
+          productList,
+          orderInfo
+        );
+        renderProductDetail(product, quantity, total);
+      } else {
+        console.error(`(!)ProductId ${productId}가 없습니다.`);
+      }
+    }
 
-//     await calculateTotal(); // 총합 계산
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// });
+    await calculateTotal(); // 총합 계산
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 // 구매자의 ID를 가져오는 함수 정의
 const setContent = (data) => {
@@ -159,9 +159,6 @@ function renderProductDetail(product, quantity, total) {
         <div class="product-title">상품명: ${product.title}</div>
         <div class="product-price">가격: ${product.price.toLocaleString()}원</div>
         <span class="stock-value">${quantity}개</span>
-        <div id="product-total-price">${
-          product.title
-        } 총 가격: ${total.toLocaleString()}원</div>
       `;
   orderProduct.appendChild(productDiv);
 }

@@ -55,6 +55,8 @@ window.addEventListener("load", async () => {
         console.error(`Product Id ${productId} not found in product list`);
       }
     });
+
+    // 총합 계산
     await calculateTotal();
   } catch (error) {
     console.error("Fetch 오류:", error.message);
@@ -65,7 +67,6 @@ window.addEventListener("load", async () => {
 function renderProductDetail(product, quantity) {
   const cartPage = document.getElementById("cart_detail");
 
-  // Create elements for product details
   const productDiv = document.createElement("div");
   productDiv.classList.add("cart-item");
   productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
@@ -88,14 +89,20 @@ function renderProductDetail(product, quantity) {
 
   cartPage.appendChild(productDiv);
 
-  // Attach event listeners for each button
   attachEventListeners(product.productId, product.stock);
 
-  // Attach event listener to image
   const productImage = productDiv.querySelector(".product-image img");
   if (productImage) {
     productImage.addEventListener("click", () => {
       window.location.href = `/product/detail?id=${product.productId}`;
+    });
+  }
+
+  // 체크박스 상태 변화 감지
+  const checkbox = productDiv.querySelector(".select-product");
+  if (checkbox) {
+    checkbox.addEventListener("change", async () => {
+      await calculateTotal(); // 체크박스 상태 변경 시 총합 재계산
     });
   }
 }
@@ -189,14 +196,14 @@ const calculateTotal = async () => {
 
     cart.forEach(({ productId, quantity }) => {
       const product = productList.find((v) => v.productId === productId);
-      if (product) {
+      const isSelected = document.querySelector(
+        `.product-${productId} .select-product`
+      )?.checked;
+      if (product && isSelected) {
         total += product.price * quantity;
-      } else {
-        console.error(`Product Id ${productId} not found`);
       }
     });
 
-    // Update total price display if needed
     const totalPriceElement = document.getElementById("total_price");
     if (totalPriceElement) {
       totalPriceElement.textContent = `${Number(total).toLocaleString()}원`;
@@ -211,13 +218,57 @@ const calculateTotal = async () => {
   }
 };
 
-// "결제하기" 버튼 추가 및 이벤트 리스너
-const pay_buttonDiv = document.getElementById("pay_button");
+// 체크된 상품 정보를 localStorage에 저장하는 함수
+const saveOrderInfo = async () => {
+  try {
+    const productList = await fetchProductList();
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-pay_buttonDiv.addEventListener("click", () => {
-  alert("결제창으로 이동합니다.");
-  window.location.href = "/order";
+    const orderInfo = cart
+      .map(({ productId, quantity }) => {
+        const product = productList.find((v) => v.productId === productId);
+        const isSelected = document.querySelector(
+          `.product-${productId} .select-product`
+        )?.checked;
+
+        if (product && isSelected) {
+          return {
+            productId: product.productId,
+            quantity: quantity, // 장바구니에서의 수량
+          };
+        }
+        return null;
+      })
+      .filter((item) => item !== null); // null 값 제거
+
+    localStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 결제하기 버튼 추가 및 이벤트 리스너 설정
+const checkoutButton = document.getElementById("pay_button");
+if (checkoutButton) {
+  checkoutButton.addEventListener("click", async () => {
+    await saveOrderInfo(); // 체크된 상품 정보를 localStorage에 저장
+    window.location.href = "/order"; // 결제 페이지로 이동
+  });
+} else {
+  console.error("결제하기 버튼이 없습니다.");
+}
+
+// "쇼핑 계속하기" 버튼 추가 및 이벤트 리스너
+const buttonDiv = document.getElementById("button");
+const continueShoppingButton = document.createElement("button");
+continueShoppingButton.innerHTML = "쇼핑 계속하기";
+
+continueShoppingButton.addEventListener("click", () => {
+  alert("쇼핑을 계속합니다.");
+  window.location.href = "/product";
 });
+
+buttonDiv.appendChild(continueShoppingButton);
 
 document.getElementById("mypage").addEventListener("click", () => {
   window.location.href = "/mypage";
