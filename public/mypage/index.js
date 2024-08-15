@@ -28,7 +28,7 @@ window.addEventListener("load", async () => {
                 `;
     } else {
       alert("토큰이 유효하지 않습니다. 로그인 페이지로 이동합니다.");
-      localStorage.removeItem("token"); // 'token'은 현재 사용중이던 토큰을 사용
+      localStorage.removeItem("token"); // 현재 토큰 제거
       window.location.href = "http://localhost:8000/signin";
     }
   } catch (err) {
