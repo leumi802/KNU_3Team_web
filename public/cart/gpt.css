@@ -47,7 +47,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 10px;
+  padding: 15px 0px 15px 15px;
   width: 100%;
   background: #ffffff;
   position: fixed;
@@ -166,6 +166,7 @@ input[type="button"]:hover {
 
 #button {
   text-align: center;
+  margin: 10px;
 }
 
 button {
