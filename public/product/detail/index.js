@@ -70,8 +70,6 @@ function renderProductDetail(product) {
         } else if (quantity < 1) {
             alert("1개 미만의 재품을 담을 수 없습니다.");
         } else {
-            alert("장바구니에 담겼습니다.");
-
 
             // localStorage에 저장할 객체 생성
             const cartItem = {
@@ -89,10 +87,26 @@ function renderProductDetail(product) {
             const existingItemIndex = cart.findIndex(item => item.productId === product.productId);
             if (existingItemIndex > -1) {
                 // 이미 장바구니에 있는 상품의 경우 수량 업데이트
-                cart[existingItemIndex].quantity = quantity;
+
+
+                if (cart[existingItemIndex].quantity + 1 <= product.stock) {
+                    cart[existingItemIndex].quantity += quantity;
+                    // 조건 통과시 장바구니에 담기
+                    alert("장바구니에 담겼습니다.");
+                }
+                else {
+                    alert("재고가 부족합니다.");
+                }
+
+                //if (cart[existingItemIndex].quantity <= prooduct.stock){
+                //   cart[existingItemIndex].quantity += quantity;
+                //}
+
             } else {
                 // 장바구니에 없는 상품인 경우 새로 추가
                 cart.push(cartItem);
+                // 조건 통과시 장바구니에 담기
+                alert("장바구니에 담겼습니다.");
             }
 
             // 업데이트된 장바구니를 localStorage에 저장
