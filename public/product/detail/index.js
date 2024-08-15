@@ -46,7 +46,7 @@ function renderProductDetail(product) {
     </div>
     <div id="product_title"> ${product.title}</div>
     <div id="product_description">${product.description}</div>
-    <div id="product_price">가격: ${product.price.toLocaleString()}원</div>
+    <div id="product_price">가격: ${product.price}원</div>
     <div id="product_stock">재고수량: ${product.stock}(개)</div>
     `;
 

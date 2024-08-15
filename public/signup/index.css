@@ -1,0 +1,96 @@
+* {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  border: none;
+  outline: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  margin: 0;
+  gap: 10px;
+
+  position: relative;
+
+  background-color: aliceblue;
+
+  height: 100%;
+}
+
+#signup_container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 40px;
+
+  max-width: 350px;
+  width: 100%;
+}
+
+body input {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  width: 100%;
+
+  border-bottom: 1px solid #4b4b4b;
+  color: #4b4b4b;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#signup_button {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  width: 100%;
+
+  background: #006aff;
+  border-radius: 30px;
+  color: white;
+  font-size: 15px;
+}
+
+#signup_button:hover {
+  background-color: #0057d0;
+}
+
+#goto_signin {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0px;
+  gap: 10px;
+
+  background-color: aliceblue;
+  border-bottom: 1px solid #006aff;
+  text-align: center;
+
+  color: #006aff;
+}
