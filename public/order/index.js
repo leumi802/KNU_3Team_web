@@ -101,13 +101,13 @@ const setContent = (data) => {
       alert("구매자 정보를 입력해주세요.");
     } else if (!postemail.value || !postemail.value.includes("@")) {
       alert("구매자 이메일을 바르게 입력해주세요.");
-    } else if (!postphone.value || isNaN(postphone.value)) {
+    } else if (!postphone.value || isNaN(parseInt(postphone.value))) {
       alert("구매자의 전화번호를 입력해주세요.");
     } else if (!getname.value) {
       alert("받는사람의 이름을 입력해주세요.");
     } else if (!getadress.value) {
       alert("주소를 입력해주세요.");
-    } else if (!getphone.value || isNaN(getphone.value)) {
+    } else if (!getphone.value || isNaN(parseInt(getphone.value))) {
       alert("받는사람의 전화번호를 입력해주세요.");
     } else {
       const user = {

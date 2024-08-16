@@ -1,5 +1,5 @@
 const mongoose = require("../db_init");
-const { String, Number, Array } = mongoose.Schema.Types;
+const { String, Array } = mongoose.Schema.Types;
 const orderSchema = new mongoose.Schema(
   {
     buyerId: {
@@ -16,7 +16,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     buyerPhoneNum: {
-      type: Number,
+      type: String,
       required: true,
     },
     recipientName: {
@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     recipientPhoneNum: {
-      type: Number,
+      type: String,
       required: true,
     },
     products: {
