@@ -143,6 +143,10 @@ const setContent = (data) => {
           console.log(data);
 
           alert("결제 되었습니다.");
+          localStorage.removeItem("orderInfo");
+          localStorage.removeItem("cart");
+          window.location.href = "/product";
+          
         } else {
           console.error("서버 오류:", result.status);
         }
