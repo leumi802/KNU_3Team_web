@@ -18,32 +18,36 @@ const jwt = require("jsonwebtoken");
 // 3. 입력이 일치할 시 로그인 성공, 아닐시 실패 (통과할때 토큰 껴주기(로그인 유지))
 // 4. 끝!
 userController.post("/signin", async (req, res) => {
-  // 사용자로부터 email 과 password를 받음
-  const { email, password } = req.body;
-  // email or password 둘 중 하나라도 없으면? out
+  const body = req.body;
+  // 사용자로부터 이메일과 패스워드 받음
+  const email = body.email;
+  const password = body.password;
+  // 이메일 혹은 패스워드 둘 중하나라도 없을 시 out
   if (!email || !password) {
     return res
       .status(400)
       .json({ result: false, message: "(!)로그인 정보가 올바르지 않습니다." });
   }
 
-  // 1. email을 기준으로 DB에서 유저 확인
-  const user = await getUserByEmail(email);
-  // User | null, 만약 유저 정보가 없으면 out
+  // 1. email을 기준으로 DB에서 유저 데이터를 꺼내와야 함.
+  const user = await getUserByEmail(email); //email을 기준으로 뽑아오니 인자가 email
+  // isExistuser의 값은? User or null, 만약 user정보가 없으면 out
   if (!user) {
     return res
       .status(404)
       .json({ result: false, message: "(!)회원 정보가 없습니다." });
   }
 
-  // 2. password 확인
-  const isValidPassword = bcrypt.compareSync(password, user.password); // boolean
+  // 유저 정보 User가 실제 있는 구간
+  //IsValidPassword는 암호화된 비번을 비교함, compareSync는 비교해서 bool값으로 반환
+  const isValidPassword = bcrypt.compareSync(password, user.password);
+  console.log(isValidPassword);
   if (isValidPassword) {
-    // 로그인 성공시 token 끼워 넣기
+    // token을 끼워넣기.
     const token = jwt.sign(
       { email: user.email, nickname: user.nickname },
       process.env.JWT_SECRET
-    );
+    ); // payload: 사용자를 특정할 수 있는 정보..
     return res
       .status(200)
       .json({ result: true, message: "로그인 성공", token });
