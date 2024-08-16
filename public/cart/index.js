@@ -249,6 +249,7 @@ const checkoutButton = document.getElementById("pay_button");
 if (checkoutButton) {
   checkoutButton.addEventListener("click", async () => {
     await saveOrderInfo(); // 체크된 상품 정보를 localStorage에 저장
+    getOrderQuantity(productId);
     window.location.href = "/order"; // 결제 페이지로 이동
   });
 } else {
