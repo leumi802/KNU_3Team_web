@@ -101,13 +101,19 @@ const setContent = (data) => {
       alert("구매자 정보를 입력해주세요.");
     } else if (!postemail.value || !postemail.value.includes("@")) {
       alert("구매자 이메일을 바르게 입력해주세요.");
-    } else if (!postphone.value || isNaN(postphone.value)) {
+    } else if (
+      !postphone.value ||
+      !(parseInt(postphone.value) == postphone.value)
+    ) {
       alert("구매자의 전화번호를 입력해주세요.");
     } else if (!getname.value) {
       alert("받는사람의 이름을 입력해주세요.");
     } else if (!getadress.value) {
       alert("주소를 입력해주세요.");
-    } else if (!getphone.value || isNaN(getphone.value)) {
+    } else if (
+      !getphone.value ||
+      !(parseInt(getphone.value) == getphone.value)
+    ) {
       alert("받는사람의 전화번호를 입력해주세요.");
     } else {
       const user = {
@@ -122,22 +128,27 @@ const setContent = (data) => {
         recipientreqst: getreqst.value,
       };
 
-      // POST 요청 보내기
-      const result = await fetch("/api/order/", {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      try {
+        // POST 요청 보내기
+        const result = await fetch("/api/order/", {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (result.ok) {
-        const data = await result.json();
-        console.log(data);
-      } else {
-        console.error("서버 오류:", result.status);
+        if (result.ok) {
+          const data = await result.json();
+          console.log(data);
+
+          alert("결제 되었습니다.");
+        } else {
+          console.error("서버 오류:", result.status);
+        }
+      } catch (err) {
+        console.log("fetch 실패", err);
       }
-      alert("결제 되었습니다.");
     }
   });
 };
