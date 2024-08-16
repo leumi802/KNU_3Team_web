@@ -139,6 +139,7 @@ const setContent = (data) => {
       }
       alert("결제 되었습니다.");
     }
+    console.log(data.products);
   });
 };
 
