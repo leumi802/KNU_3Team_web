@@ -3,7 +3,6 @@ const { String, Array } = mongoose.Schema.Types;
 const orderSchema = new mongoose.Schema(
   {
     buyerId: {
-      // user 모델에 있는 Object ID임 결제한 사람의 ID를 땡겨와야함
       type: String,
       required: true,
     },
