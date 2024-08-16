@@ -44,4 +44,22 @@ productController.post("/", async (req, res) => {
     });
   }
 });
+
+// 사용자가 주문 or 주문 취소시, db의 재고 수정.
+productController.patch("/", async (req, res) => {
+  const { productId, productQuantity } = req.body;
+  try {
+    // id로 db의 product 가져오기
+    const product = await getProductListById(productId);
+    // productQuantity에 맞게 db 재고 수정.
+  } catch (err) {
+    console.errer(err);
+    return res.status(500).json({
+      result: false,
+      productId: productId,
+      message: "(!)재고 수량 변경 실패",
+    });
+  }
+});
+
 module.exports = productController;

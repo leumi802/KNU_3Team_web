@@ -37,6 +37,7 @@ orderController.post("/", async (req, res) => {
 // 2) 필터(조건)를 적용한다.
 // 3) 페이지네이션 적용(끊어서 보내주는 역할..?)
 
+// Todo: method: post로 변경, getOrderListByUser 추가해서 마이페이지에서 내 결제기록 볼 수 있도록
 orderController.get("/", async (req, res) => {
   // 상품 전체 조회
   // 가져온 데이터를 res.json({})에 실어서 클라이언트로 보내준다.
