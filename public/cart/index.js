@@ -72,20 +72,20 @@ function renderProductDetail(product, quantity) {
   productDiv.classList.add(`product-${product.productId}`); // productId를 클래스에 추가
 
   productDiv.innerHTML = `
-      <input type="checkbox" class="select-product" checked />
-      <div class="product-image">
-          <img src="${product.imgUrl}" data-product-id="${product.productId}" />
-      </div>
-      <div id="product">
-        <div class="product_title">상품명: ${product.title}</div>
-        <div class="product_price">가격: ${Number(
-          product.price
-        ).toLocaleString()}원</div>
-        <input type="button" class="minus" value="-" />
-        <span class="stock-value">${quantity}개</span>
-        <input type="button" class="plus" value="+" />
-      <button class="cart-delete">삭제</button></div>
-    `;
+    <input type="checkbox" class="select-product" checked />
+    <div class="product-image">
+        <img src="${product.imgUrl}" data-product-id="${product.productId}" />
+    </div>
+    <div id="product">
+      <div class="product_title">상품명: ${product.title}</div>
+      <div class="product_price">가격: ${Number(
+        product.price
+      ).toLocaleString()}원</div>
+      <input type="button" class="minus" value="-" />
+      <span class="stock-value">${quantity}개</span>
+      <input type="button" class="plus" value="+" />
+    <button class="cart-delete">삭제</button></div>
+  `;
 
   cartPage.appendChild(productDiv);
 

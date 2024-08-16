@@ -33,7 +33,6 @@ window.addEventListener("load", async () => {
 
 // 상품 상세 정보 렌더링 함수
 function renderProductDetail(product) {
-  console.log("product:", product);
   const productDetail = document.getElementById("product_detail");
   productDetail.innerHTML = `
   <div id="img_container">
