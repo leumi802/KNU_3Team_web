@@ -91,21 +91,23 @@ const setContent = (data) => {
   const getadress = document.getElementById("getadress");
   const getphone = document.getElementById("getphone");
   const products = JSON.parse(localStorage.getItem("orderInfo")) || [];
+  const getreqst = document.getElementById("getreqst");
 
   const payButton = document.getElementById("order");
 
   payButton.addEventListener("click", async () => {
+    console.log(getreqst.value);
     if (!postname.value) {
       alert("구매자 정보를 입력해주세요.");
     } else if (!postemail.value || !postemail.value.includes("@")) {
       alert("구매자 이메일을 바르게 입력해주세요.");
-    } else if (!postphone.value) {
+    } else if (!postphone.value || isNaN(postphone.value)) {
       alert("구매자의 전화번호를 입력해주세요.");
     } else if (!getname.value) {
       alert("받는사람의 이름을 입력해주세요.");
     } else if (!getadress.value) {
       alert("주소를 입력해주세요.");
-    } else if (!getphone.value) {
+    } else if (!getphone.value || isNaN(getphone.value)) {
       alert("받는사람의 전화번호를 입력해주세요.");
     } else {
       const user = {
@@ -117,6 +119,7 @@ const setContent = (data) => {
         recipientAddress: getadress.value,
         recipientPhoneNum: getphone.value,
         products: products,
+        recipientreqst: getreqst.value,
       };
 
       // POST 요청 보내기
