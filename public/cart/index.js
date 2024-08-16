@@ -39,39 +39,28 @@ window.addEventListener("load", async () => {
       throw new Error("장바구니에 상품이 없습니다.");
     }
 
-    try {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const productList = await fetchProductList(); // 상품 목록을 먼저 가져옵니다
-
-      if (cart.length === 0) {
-        throw new Error("장바구니에 상품이 없습니다.");
-      }
-
-      // 기존 상품 목록을 초기화
-      const cartPage = document.getElementById("cart_detail");
-      if (!cartPage) {
-        throw new Error("cart_detail 요소가 존재하지 않습니다.");
-      }
-      cartPage.innerHTML = "";
-
-      // 장바구니의 각 상품을 렌더링
-      cart.forEach(({ productId, quantity }) => {
-        const product = productList.find(
-          (item) => item.productId === productId
-        );
-        if (product) {
-          renderProductDetail(product, quantity);
-        } else {
-          console.error(`Product Id ${productId} not found in product list`);
-        }
-      });
-
-      // 총합 계산
-      await calculateTotal();
-    } catch (error) {
-      console.error("Fetch 오류:", error.message);
+    // 기존 상품 목록을 초기화
+    const cartPage = document.getElementById("cart_detail");
+    if (!cartPage) {
+      throw new Error("cart_detail 요소가 존재하지 않습니다.");
     }
-  } catch (err) {}
+    cartPage.innerHTML = "";
+
+    // 장바구니의 각 상품을 렌더링
+    cart.forEach(({ productId, quantity }) => {
+      const product = productList.find((item) => item.productId === productId);
+      if (product) {
+        renderProductDetail(product, quantity);
+      } else {
+        console.error(`Product Id ${productId} not found in product list`);
+      }
+    });
+
+    // 총합 계산
+    await calculateTotal();
+  } catch (error) {
+    console.error("Fetch 오류:", error.message);
+  }
 });
 
 // 상품 상세 정보 렌더링 함수
@@ -169,14 +158,14 @@ function updateCartQuantity(productId, delta) {
     if (product.quantity <= 0) {
       product.quantity = 1; // 수량을 1로 설정
       alert("최소 1개 이상이어야 합니다. 수량을 1로 변경합니다.");
-    }
-  } else {
-    localStorage.setItem("cart", JSON.stringify(cart));
-    const stockValueElement = document.querySelector(
-      `.product-${productId} .stock-value`
-    );
-    if (stockValueElement) {
-      stockValueElement.textContent = `${product.quantity}개`;
+    } else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      const stockValueElement = document.querySelector(
+        `.product-${productId} .stock-value`
+      );
+      if (stockValueElement) {
+        stockValueElement.textContent = `${product.quantity}개`;
+      }
     }
   }
 }
@@ -218,7 +207,12 @@ const calculateTotal = async () => {
     } else {
       console.error("Total price element not found");
     }
-  } catch (err) {}
+
+    return total;
+  } catch (err) {
+    console.error(err);
+    return 0;
+  }
 };
 
 // 체크된 상품 정보를 localStorage에 저장하는 함수
