@@ -19,7 +19,7 @@ window.addEventListener("load", async () => {
     if (verifyResult.ok) {
       const productData = await verifyResult.json();
 
-      const fetchData = productData.data[0];
+      const fetchData = productData.data;
       renderProductDetail(fetchData);
       addFunc(fetchData);
       console.log("상품을 정상적으로 업로딩했습니다.");
@@ -35,27 +35,27 @@ window.addEventListener("load", async () => {
 function renderProductDetail(product) {
   const productDetail = document.getElementById("product_detail");
   productDetail.innerHTML = `
-<div id="img_container">
-    <img src="${product.imgUrl}" />
-</div>
-<div id="product_info">
-    <div id="product_title">${product.title}</div>
-    <div id="product_description">${product.description}</div>
-    <div id="product_price">가격: ${Number(
-      product.price
-    ).toLocaleString()}원</div>
-    <div id="product_stock">재고수량: ${product.stock}(개)</div>
-    <div id="input">
-      <p>수량: </p>
-      <input id="quantity" type="number" min=1 max=${[
-        product.stock,
-      ]} value="1"/></div>
-    <div id="product_btn">
-      <button id="put">담기</button>
-      <button id="goto_order">결제하기</button>
-    </div>
-</div>
-`;
+  <div id="img_container">
+      <img src="${product.imgUrl}" />
+  </div>
+  <div id="product_info">
+      <div id="product_title">${product.title}</div>
+      <div id="product_description">${product.description}</div>
+      <div id="product_price">가격: ${Number(
+        product.price
+      ).toLocaleString()}원</div>
+      <div id="product_stock">재고수량: ${product.stock}(개)</div>
+      <div id="input">
+        <p>수량: </p>
+        <input id="quantity" type="number" min=1 max=${[
+          product.stock,
+        ]} value="1"/></div>
+      <div id="product_btn">
+        <button id="put">담기</button>
+        <button id="goto_order">결제하기</button>
+      </div>
+  </div>
+  `;
 }
 
 // html에 함수 추가

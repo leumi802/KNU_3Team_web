@@ -1,6 +1,7 @@
 const {
   getProductList,
   getProductListById,
+  updateProductQuantity,
 } = require("../service/product.service");
 const productController = require("express").Router();
 
@@ -30,11 +31,12 @@ productController.post("/", async (req, res) => {
   const { productId } = req.body;
   // 상품 전체 조회
   try {
-    const productList = await getProductListById(productId);
-    // console.log("productController.post: productList:", productList);
+    const product = await getProductListById(productId);
+    // console.log("productController.post: product:", product);
+
     return res.status(200).json({
       result: true,
-      data: productList,
+      data: product,
     });
   } catch (err) {
     console.error(err);
@@ -44,4 +46,31 @@ productController.post("/", async (req, res) => {
     });
   }
 });
+
+// 사용자가 주문 or 주문 취소시, db의 재고 수정.
+productController.patch("/", async (req, res) => {
+  const { productId, productQuantity } = req.body;
+
+  console.log(productId, productQuantity);
+  try {
+    // id로 db의 product 가져오기
+    const product = await getProductListById(productId);
+    // console.log("productController.post: productId:", product.productId);
+    // console.log("productController.post: productId:", product.stock);
+    updateProductQuantity(product.productId, product.stock + productQuantity);
+    return res.status(200).json({
+      result: true,
+      productId: productId,
+      message: "재고 수량 변경 성공",
+    });
+  } catch (err) {
+    console.errer(err);
+    return res.status(500).json({
+      result: false,
+      productId: productId,
+      message: "(!)재고 수량 변경 실패",
+    });
+  }
+});
+
 module.exports = productController;
