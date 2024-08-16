@@ -35,6 +35,10 @@ const orderSchema = new mongoose.Schema(
       type: Array, // ((product:1, productTitle:title1))
       required: true,
     },
+    recipientreqst: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: {

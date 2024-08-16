@@ -156,11 +156,8 @@ function updateCartQuantity(productId, delta) {
   if (product) {
     product.quantity += delta;
     if (product.quantity <= 0) {
-      removeProductFromCart(productId); // 장바구니에서 삭제
-      const cartItem = document.querySelector(`.product-${productId}`);
-      if (cartItem) {
-        cartItem.remove(); // 화면에서도 삭제
-      }
+      product.quantity = 1; // 수량을 1로 설정
+      alert("최소 1개 이상이어야 합니다. 수량을 1로 변경합니다.");
     } else {
       localStorage.setItem("cart", JSON.stringify(cart));
       const stockValueElement = document.querySelector(

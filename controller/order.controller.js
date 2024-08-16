@@ -11,6 +11,7 @@ orderController.post("/", async (req, res) => {
     recipientAddress,
     recipientPhoneNum,
     products,
+    recipientreqst,
   } = req.body;
   console.log(req.body);
 
@@ -23,6 +24,7 @@ orderController.post("/", async (req, res) => {
     recipientAddress,
     recipientPhoneNum,
     products,
+    recipientreqst,
   };
   try {
     await createOrder(user);
