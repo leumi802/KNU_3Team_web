@@ -57,7 +57,7 @@ document.getElementById("order").addEventListener("click", () => {
 
 document.getElementById("logout_btn").addEventListener("click", () => {
   localStorage.removeItem("token"); // 토큰 제거
-  localStorage.removeItem("cart");  // 장바구니 제거
+  localStorage.removeItem("cart"); // 장바구니 제거
   alert("로그아웃 되었습니다");
   window.location.href = "/signin"; // 로그인 페이지로 이동
 });
